@@ -4,7 +4,7 @@ export const site = {
 	tagline: '用代码与设计，构建有温度的数字体验',
 	description:
 		'李明远的个人网站 — 全栈开发、产品设计、技术写作。专注于 Web 应用、设计系统与开源项目。',
-	url: 'https://personal-site.vercel.app',
+	url: 'https://personal-site-ruddy-two.vercel.app',
 	locale: 'zh-CN',
 	avatar: '/avatar.svg',
 	email: 'hello@example.com',
