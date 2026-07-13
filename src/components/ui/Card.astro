@@ -1,0 +1,20 @@
+---
+interface Props {
+	href?: string;
+	class?: string;
+}
+
+const { href, class: className } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+	href={href}
+	class:list={[
+		'tile group block p-7 transition-all duration-300',
+		href && 'hover:-translate-y-1 hover:shadow-[0_20px_40px_-16px_rgba(0,0,0,0.18)]',
+		className,
+	]}
+>
+	<slot />
+</Tag>

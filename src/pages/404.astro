@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="页面未找到" description="您访问的页面不存在。">
+	<section class="py-28 sm:py-40">
+		<div class="mx-auto max-w-6xl px-4 text-center sm:px-6">
+			<p class="section-index mb-5">404</p>
+			<h1 class="display-title text-4xl sm:text-6xl">迷路了？</h1>
+			<p class="mx-auto mt-6 max-w-md text-lg text-muted">
+				抱歉，您访问的页面不存在或已被移除。不如回到首页重新出发。
+			</p>
+			<a
+				href="/"
+				class="mt-10 inline-block rounded-full bg-accent px-8 py-3.5 text-sm font-semibold text-white hover:bg-accent-hover"
+			>
+				返回首页
+			</a>
+		</div>
+	</section>
+</BaseLayout>

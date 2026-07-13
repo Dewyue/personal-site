@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, contactInfo } from '../data/site';
+
+const channels = [
+	{
+		title: '电子邮件',
+		value: site.email,
+		href: `mailto:${site.email}`,
+		note: contactInfo.responseTime,
+	},
+	{
+		title: 'GitHub',
+		value: '查看开源项目',
+		href: site.social.github,
+		note: '代码与开源贡献',
+	},
+	{
+		title: 'LinkedIn',
+		value: '职业社交',
+		href: site.social.linkedin,
+		note: '工作经历与推荐',
+	},
+	{
+		title: 'Twitter / X',
+		value: '日常分享',
+		href: site.social.twitter,
+		note: '想法与动态',
+	},
+] as const;
+---
+
+<BaseLayout title="联系" description={`联系 ${site.name} — ${contactInfo.intro}`}>
+	<!-- 白色块：页首 -->
+	<section class="py-16 sm:py-24">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<p class="section-index reveal mb-5">Contact</p>
+			<h1 class="display-title reveal text-4xl sm:text-6xl lg:text-7xl">
+				有想法？<br />一起做点什么。
+			</h1>
+			<p class="reveal mt-8 max-w-xl text-lg text-muted">{contactInfo.intro}</p>
+			<p class="reveal mt-3 text-sm font-semibold text-accent">{contactInfo.availability}</p>
+		</div>
+	</section>
+
+	<!-- 黑色块：联系渠道瓦片 -->
+	<section class="band-ink py-20 sm:py-28">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<div class="grid gap-5 sm:grid-cols-2">
+				{
+					channels.map((ch) => (
+						<a
+							href={ch.href}
+							target={ch.href.startsWith('mailto') ? undefined : '_blank'}
+							rel={ch.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+							class="card-on-ink group rounded-[1.75rem] p-8 transition-all duration-300 hover:-translate-y-1"
+						>
+							<div class="flex items-start justify-between gap-4">
+								<h2 class="text-xl font-semibold tracking-tight group-hover:text-accent sm:text-2xl">
+									{ch.title}
+								</h2>
+								<span class="text-lg text-accent transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5">
+									↗
+								</span>
+							</div>
+							<p class="mt-2 text-sm text-[var(--color-on-ink-muted)]">{ch.note}</p>
+							<p class="mt-6 text-sm font-medium text-accent">{ch.value}</p>
+						</a>
+					))
+				}
+
+				<div class="card-on-ink rounded-[1.75rem] p-8 sm:col-span-2">
+					<div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+						<div>
+							<h2 class="text-xl font-semibold tracking-tight sm:text-2xl">微信</h2>
+							<p class="mt-2 text-sm text-[var(--color-on-ink-muted)]">即时交流</p>
+						</div>
+						<p class="rounded-full bg-[var(--color-surface)]/10 px-5 py-2 text-sm font-medium">
+							{site.social.wechat}
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<p class="reveal mt-12 text-center text-sm text-[var(--color-on-ink-muted)]">
+				目前工作、生活在{site.location}
+			</p>
+		</div>
+	</section>
+</BaseLayout>

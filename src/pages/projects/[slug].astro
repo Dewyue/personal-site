@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects', ({ data }) => !data.draft);
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project },
+	}));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+function formatDate(date: Date) {
+	return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<BaseLayout title={project.data.title} description={project.data.description}>
+	<Section class="pt-12 sm:pt-16">
+		<article class="mx-auto max-w-3xl">
+			<a href="/projects" class="link-blue text-sm">← 作品集</a>
+			<h1 class="display-title mt-6 text-4xl sm:text-5xl">{project.data.title}</h1>
+			<p class="mt-5 text-lg leading-relaxed text-muted">{project.data.description}</p>
+			<p class="mt-3 text-sm text-muted">{formatDate(project.data.pubDate)}</p>
+
+			<div class="mt-5 flex flex-wrap gap-2">
+				{
+					project.data.tags.map((tag) => (
+						<span class="rounded-full bg-surface-muted px-3.5 py-1.5 text-xs font-medium text-muted">{tag}</span>
+					))
+				}
+			</div>
+
+			{
+				(project.data.link || project.data.github) && (
+					<div class="mt-6 flex flex-wrap gap-4">
+						{project.data.link && (
+							<a
+								href={project.data.link}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white hover:bg-accent-hover"
+							>
+								访问项目 ↗
+							</a>
+						)}
+						{project.data.github && (
+							<a
+								href={project.data.github}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="rounded-full bg-surface-muted px-6 py-2.5 text-sm font-semibold text-foreground hover:bg-[var(--color-border)]"
+							>
+								查看源码 ↗
+							</a>
+						)}
+					</div>
+				)
+			}
+
+			<div class="prose-custom mt-10">
+				<Content />
+			</div>
+		</article>
+	</Section>
+</BaseLayout>
