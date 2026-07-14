@@ -1,19 +1,19 @@
 export const site = {
-	name: '李明远',
+	name: '王悦',
 	title: '全栈开发者 · 产品设计师',
 	tagline: '用代码与设计，构建有温度的数字体验',
 	description:
-		'李明远的个人网站 — 全栈开发、产品设计、技术写作。专注于 Web 应用、设计系统与开源项目。',
+		'王悦的个人网站 — 全栈开发、产品设计、技术写作。专注于 Web 应用、设计系统与开源项目。',
 	url: 'https://personal-site-ruddy-two.vercel.app',
 	locale: 'zh-CN',
 	avatar: '/avatar.svg',
 	email: 'hello@example.com',
 	location: '上海，中国',
 	social: {
-		github: 'https://github.com/example',
+		github: 'https://github.com/Dewyue',
 		twitter: 'https://twitter.com/example',
 		linkedin: 'https://linkedin.com/in/example',
-		wechat: 'limingyuan_dev',
+		wechat: 'Dewyue',
 	},
 } as const;
 
@@ -74,7 +74,7 @@ export const timeline = [
 
 export const aboutStory = {
 	intro:
-		'你好，我是李明远。我是一名热爱技术与设计的全栈开发者，相信好的产品是工程能力与审美直觉的结合。',
+		'你好，我是王悦。我是一名热爱技术与设计的全栈开发者，相信好的产品是工程能力与审美直觉的结合。',
 	paragraphs: [
 		'从大学时期开始接触编程，我逐渐发现写代码不仅是解决问题，更是一种创造性的表达。过去几年，我在创业公司和大厂都工作过，积累了从 0 到 1 构建产品、以及在大规模系统中优化体验的完整经验。',
 		'工作之余，我喜欢写技术博客、参与开源项目，也会花时间研究 UI/UX 趋势。我相信持续学习是开发者最重要的能力。',
