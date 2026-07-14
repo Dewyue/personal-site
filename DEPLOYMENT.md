@@ -1,5 +1,7 @@
 # 部署指南
 
+> **需要国内 + 海外都稳定访问？** 见 [DEPLOYMENT-DUAL.md](./DEPLOYMENT-DUAL.md)（双节点：Vercel 海外 + 阿里云 OSS/CDN 国内 + 备案 + 分线路 DNS）。
+
 本项目已配置为在 [Vercel](https://vercel.com) 上零配置部署。
 
 ## 前置条件

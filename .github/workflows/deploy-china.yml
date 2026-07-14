@@ -1,0 +1,59 @@
+# 国内节点：构建后同步到阿里云 OSS（需先在 GitHub 配置 Secrets，见 DEPLOYMENT-DUAL.md）
+name: Deploy China (Aliyun OSS)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-china
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # 未配置密钥时跳过，不影响海外 Vercel 部署
+    if: ${{ vars.CHINA_DEPLOY_ENABLED == 'true' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install & build
+        run: npm ci && npm run build
+
+      - name: Install ossutil
+        run: |
+          curl -fsSL -o ossutil64 https://gosspublic.alicdn.com/ossutil/1.7.18/ossutil64
+          chmod +x ossutil64
+
+      - name: Configure ossutil
+        env:
+          ALIYUN_OSS_ENDPOINT: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
+          ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+          ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+        run: |
+          ./ossutil64 config -e "$ALIYUN_OSS_ENDPOINT" -i "$ALIYUN_ACCESS_KEY_ID" -k "$ALIYUN_ACCESS_KEY_SECRET" -L CH
+
+      - name: Sync to OSS
+        env:
+          ALIYUN_OSS_BUCKET: ${{ secrets.ALIYUN_OSS_BUCKET }}
+        run: |
+          ./ossutil64 sync dist/ "oss://${ALIYUN_OSS_BUCKET}/" -f --delete --meta Cache-Control:max-age=3600
+
+      - name: Refresh CDN cache (optional)
+        if: ${{ secrets.ALIYUN_CDN_DOMAIN != '' }}
+        env:
+          ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+          ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+          ALIYUN_CDN_DOMAIN: ${{ secrets.ALIYUN_CDN_DOMAIN }}
+        run: |
+          # 需要 CDN 刷新权限；若未开通可删除此 step 或在 OSS 控制台手动刷新
+          echo "CDN domain: $ALIYUN_CDN_DOMAIN — configure refresh in Aliyun CDN console if needed"
