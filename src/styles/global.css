@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
+/* 让 dark: 变体跟随 html.dark 类，而非系统偏好 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
 	--font-sans: "Inter", "Noto Sans SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-	/* Apple 质感 — 浅色模式 */
+	/* 浅色模式 */
 	--color-surface: #ffffff;
 	--color-surface-muted: #f5f5f7;
 	--color-surface-raised: #ffffff;
@@ -13,30 +16,39 @@
 	--color-accent: #0a4fd8;
 	--color-accent-hover: #0843b5;
 	--color-accent-soft: #e8effc;
+	/* 对比色块（仅浅色模式用纯黑） */
 	--color-ink: #000000;
+	--color-on-ink: #f5f5f7;
 	--color-on-ink-muted: #86868b;
 	--color-on-ink-card: #1c1c1e;
+	--shadow-tile-hover: 0 20px 40px -16px rgb(0 0 0 / 0.18);
 }
 
 @layer base {
 	html {
 		scroll-behavior: smooth;
+		color-scheme: light;
 	}
 
 	html.dark {
-		/* Apple 质感 — 深色模式 */
+		color-scheme: dark;
+
+		/* 深色模式：全站暗色层级，不做黑白反转 */
 		--color-surface: #000000;
 		--color-surface-muted: #1c1c1e;
-		--color-surface-raised: #161617;
-		--color-border: #2c2c2e;
+		--color-surface-raised: #2c2c2e;
+		--color-border: #3a3a3c;
 		--color-foreground: #f5f5f7;
 		--color-muted: #86868b;
 		--color-accent: #4c86ff;
 		--color-accent-hover: #6d9cff;
 		--color-accent-soft: #10233f;
-		--color-ink: #f5f5f7;
-		--color-on-ink-muted: #6e6e73;
-		--color-on-ink-card: #e8e8ed;
+		/* 对比区块：略亮一层深灰，不是白底 */
+		--color-ink: #1c1c1e;
+		--color-on-ink: #f5f5f7;
+		--color-on-ink-muted: #86868b;
+		--color-on-ink-card: #2c2c2e;
+		--shadow-tile-hover: 0 20px 40px -16px rgb(0 0 0 / 0.55);
 	}
 
 	body {
@@ -45,6 +57,9 @@
 		font-family: var(--font-sans);
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		transition:
+			background-color 0.35s ease,
+			color 0.35s ease;
 	}
 
 	::selection {
@@ -61,7 +76,6 @@
 }
 
 @layer components {
-	/* Apple 式大标题：无衬线、重字重、紧字距 */
 	.display-title {
 		font-weight: 700;
 		letter-spacing: -0.028em;
@@ -69,7 +83,6 @@
 		text-wrap: balance;
 	}
 
-	/* 小眉题：深蓝强调 */
 	.section-index {
 		font-size: 0.8125rem;
 		font-weight: 600;
@@ -78,24 +91,41 @@
 		color: var(--color-accent);
 	}
 
-	/* 反色大色块（黑底白字 / 深色模式下白底黑字） */
+	/* 对比色块：浅色=黑底白字；深色=深灰底浅字（不反转成白底） */
 	.band-ink {
 		background-color: var(--color-ink);
-		color: var(--color-surface);
+		color: var(--color-on-ink);
+		transition:
+			background-color 0.35s ease,
+			color 0.35s ease;
 	}
 
-	/* 反色块内的填色卡片 */
 	.card-on-ink {
-		background-color: color-mix(in srgb, var(--color-surface) 9%, var(--color-ink));
+		background-color: var(--color-on-ink-card);
+		transition: background-color 0.35s ease;
 	}
 
-	/* 填色卡片（浅灰模块，Apple 产品瓦片式） */
 	.tile {
 		border-radius: 1.75rem;
 		background-color: var(--color-surface-muted);
+		transition:
+			background-color 0.35s ease,
+			box-shadow 0.35s ease,
+			transform 0.35s ease;
 	}
 
-	/* Apple 式蓝色文字链接 */
+	.tile-hover {
+		transition:
+			background-color 0.35s ease,
+			box-shadow 0.35s ease,
+			transform 0.35s ease;
+	}
+
+	.tile-hover:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-tile-hover);
+	}
+
 	.link-blue {
 		color: var(--color-accent);
 		font-weight: 500;
@@ -106,7 +136,22 @@
 		text-underline-offset: 4px;
 	}
 
-	/* 跑马灯 */
+	.tag-pill {
+		border-radius: 9999px;
+		padding: 0.25rem 0.75rem;
+		font-size: 0.75rem;
+		background-color: color-mix(in srgb, var(--color-foreground) 7%, transparent);
+		color: var(--color-muted);
+	}
+
+	.tag-pill-on-band {
+		border-radius: 9999px;
+		padding: 0.25rem 0.75rem;
+		font-size: 0.75rem;
+		background-color: color-mix(in srgb, var(--color-on-ink) 12%, transparent);
+		color: var(--color-on-ink-muted);
+	}
+
 	.marquee-track {
 		display: flex;
 		width: max-content;
@@ -117,7 +162,6 @@
 		animation-play-state: paused;
 	}
 
-	/* 滚动入场 */
 	.reveal {
 		opacity: 0;
 		transform: translateY(24px);
@@ -131,7 +175,6 @@
 		transform: translateY(0);
 	}
 
-	/* 正文排版 */
 	.prose-custom {
 		max-width: none;
 		line-height: 1.75;

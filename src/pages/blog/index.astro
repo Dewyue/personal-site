@@ -12,7 +12,6 @@ function formatDate(date: Date) {
 ---
 
 <BaseLayout title="博客" description="技术文章、开发笔记与思考。">
-	<!-- 白色块：页首 -->
 	<section class="py-16 sm:py-24">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
 			<p class="section-index reveal mb-5">Journal · {posts.length} Posts</p>
@@ -24,7 +23,6 @@ function formatDate(date: Date) {
 		</div>
 	</section>
 
-	<!-- 白色块：文章瓦片 -->
 	<section class="pb-20 sm:pb-28">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
 			<div class="grid gap-5 sm:grid-cols-2">
@@ -33,17 +31,11 @@ function formatDate(date: Date) {
 						<a
 							href={`/blog/${post.id}`}
 							class:list={[
-								'tile group flex flex-col p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-16px_rgba(0,0,0,0.18)] sm:p-10',
-								i === 0 && 'band-ink sm:col-span-2',
+								'tile group tile-hover flex flex-col p-8 sm:p-10',
+								i === 0 && 'sm:col-span-2 sm:p-12',
 							]}
 						>
-							<time
-								class:list={[
-									'text-xs font-medium',
-									i === 0 ? 'text-[var(--color-on-ink-muted)]' : 'text-muted',
-								]}
-								datetime={post.data.pubDate.toISOString()}
-							>
+							<time class="text-xs font-medium text-muted" datetime={post.data.pubDate.toISOString()}>
 								{formatDate(post.data.pubDate)}
 							</time>
 							<h2
@@ -57,23 +49,14 @@ function formatDate(date: Date) {
 							<p
 								class:list={[
 									'mt-3 flex-1 text-sm leading-relaxed sm:text-base',
-									i === 0 ? 'line-clamp-3 max-w-2xl text-[var(--color-on-ink-muted)]' : 'line-clamp-3 text-muted',
+									i === 0 ? 'line-clamp-3 max-w-2xl text-muted' : 'line-clamp-3 text-muted',
 								]}
 							>
 								{post.data.description}
 							</p>
 							<div class="mt-5 flex flex-wrap items-center gap-2">
 								{post.data.tags.map((tag) => (
-									<span
-										class:list={[
-											'rounded-full px-3 py-1 text-xs',
-											i === 0
-												? 'bg-[var(--color-surface)]/10 text-[var(--color-on-ink-muted)]'
-												: 'bg-[var(--color-surface)] text-muted',
-										]}
-									>
-										{tag}
-									</span>
+									<span class="tag-pill">{tag}</span>
 								))}
 								<span class="link-blue ml-auto text-sm">阅读 →</span>
 							</div>

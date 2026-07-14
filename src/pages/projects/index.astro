@@ -69,9 +69,7 @@ function formatDate(date: Date) {
 								</p>
 								<div class="mt-4 flex flex-wrap gap-2">
 									{project.data.tags.map((tag) => (
-										<span class="rounded-full bg-[var(--color-surface)]/10 px-3 py-1 text-xs text-[var(--color-on-ink-muted)]">
-											{tag}
-										</span>
+										<span class="tag-pill-on-band">{tag}</span>
 									))}
 								</div>
 							</div>

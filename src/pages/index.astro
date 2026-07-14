@@ -124,7 +124,7 @@ function formatDate(date: Date) {
 			<div class="grid gap-5 sm:grid-cols-3">
 				{
 					skillCategories.map((cat) => (
-						<div class="tile reveal p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-16px_rgba(0,0,0,0.18)]">
+						<div class="tile tile-hover reveal p-8">
 							<h3 class="text-xl font-semibold tracking-tight">{cat.title}</h3>
 							<ul class="mt-5 space-y-2.5">
 								{cat.items.map((item) => (
@@ -168,7 +168,7 @@ function formatDate(date: Date) {
 					latestPosts.map((post) => (
 						<a
 							href={`/blog/${post.id}`}
-							class="tile group flex flex-col p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-16px_rgba(0,0,0,0.18)]"
+							class="tile group tile-hover flex flex-col p-8"
 						>
 							<time
 								class="text-xs font-medium text-muted"

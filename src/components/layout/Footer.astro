@@ -31,7 +31,7 @@ const socials = [
 					{
 						nav.map((item) => (
 							<li>
-								<a href={item.href} class="text-sm text-[var(--color-on-ink-muted)] hover:text-[var(--color-surface)]">
+								<a href={item.href} class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]">
 									{item.label}
 								</a>
 							</li>
@@ -50,7 +50,7 @@ const socials = [
 									href={s.href}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="text-sm text-[var(--color-on-ink-muted)] hover:text-[var(--color-surface)]"
+									class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]"
 								>
 									{s.label}
 								</a>
@@ -67,13 +67,13 @@ const socials = [
 				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">信息</p>
 				<ul class="mt-4 space-y-2.5">
 					<li>
-						<a href={`mailto:${site.email}`} class="text-sm text-[var(--color-on-ink-muted)] hover:text-[var(--color-surface)]">
+						<a href={`mailto:${site.email}`} class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]">
 							{site.email}
 						</a>
 					</li>
 					<li><span class="text-sm text-[var(--color-on-ink-muted)]">{site.location}</span></li>
 					<li>
-						<a href="/rss.xml" class="text-sm text-[var(--color-on-ink-muted)] hover:text-[var(--color-surface)]">RSS 订阅</a>
+						<a href="/rss.xml" class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]">RSS 订阅</a>
 					</li>
 				</ul>
 			</div>
