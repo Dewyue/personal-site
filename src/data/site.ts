@@ -24,7 +24,7 @@ export const nav = [
 	{ label: '首页', href: '/' },
 	{ label: '关于', href: '/about' },
 	{ label: '兴趣', href: '/interests' },
-	{ label: '作品', href: '/#portfolio' },
+	{ label: '作品', href: '/projects' },
 	{ label: '博客', href: '/blog' },
 	{ label: '联系', href: '/contact' },
 ] as const;

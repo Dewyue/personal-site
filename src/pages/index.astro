@@ -177,8 +177,10 @@ function formatDate(date: Date) {
 		});
 	});
 
-	const pageFromQuery = Number(new URLSearchParams(window.location.search).get('page'));
-	if (pageFromQuery) {
+	const params = new URLSearchParams(window.location.search);
+	const pageFromQuery = Number(params.get('page'));
+	// 仅在明确带 #portfolio 或从作品卡片跳转时才滚到作品集，避免打开首页就定位过去
+	if (pageFromQuery && window.location.hash === '#portfolio') {
 		requestAnimationFrame(() => jumpToPortfolioPage(pageFromQuery));
 	}
 </script>

@@ -145,6 +145,7 @@ const pages = Array.from({ length: portfolioMeta.totalPages }, (_, i) => i + 1);
 
 		const pages = root.querySelectorAll<HTMLImageElement>('.portfolio-page');
 		const thumbs = root.querySelectorAll<HTMLButtonElement>('.portfolio-thumb');
+		const thumbStrip = root.querySelector<HTMLElement>('[aria-label="作品集缩略图"]');
 		const currentEl = root.querySelector<HTMLElement>('.portfolio-current');
 		const captionEl = root.querySelector<HTMLElement>('.portfolio-caption');
 		const prevBtns = root.querySelectorAll('.portfolio-prev');
@@ -156,7 +157,14 @@ const pages = Array.from({ length: portfolioMeta.totalPages }, (_, i) => i + 1);
 			return project ? `${project.number} · ${project.title}` : '作品集';
 		}
 
-		function go(page: number) {
+		function centerThumb(thumb: HTMLElement) {
+			if (!thumbStrip) return;
+			const left = thumb.offsetLeft - (thumbStrip.clientWidth - thumb.clientWidth) / 2;
+			thumbStrip.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+		}
+
+		function go(page: number, opts: { syncThumb?: boolean } = {}) {
+			const { syncThumb = true } = opts;
 			current = Math.max(1, Math.min(total, page));
 			pages.forEach((img) => {
 				img.classList.toggle('is-active', Number(img.dataset.page) === current);
@@ -167,9 +175,7 @@ const pages = Array.from({ length: portfolioMeta.totalPages }, (_, i) => i + 1);
 				thumb.classList.toggle('ring-transparent', !active);
 				thumb.classList.toggle('opacity-55', !active);
 				thumb.setAttribute('aria-current', active ? 'true' : 'false');
-				if (active) {
-					thumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-				}
+				if (active && syncThumb) centerThumb(thumb);
 			});
 			if (currentEl) currentEl.textContent = String(current);
 			if (captionEl) captionEl.textContent = captionFor(current);
@@ -231,7 +237,8 @@ const pages = Array.from({ length: portfolioMeta.totalPages }, (_, i) => i + 1);
 			{ passive: true },
 		);
 
-		go(current);
+		// 初始化时不要 scrollIntoView，避免打开首页就被滚到作品集
+		go(current, { syncThumb: false });
 	}
 
 	document.querySelectorAll<HTMLElement>('.portfolio-viewer').forEach(initPortfolioViewer);
