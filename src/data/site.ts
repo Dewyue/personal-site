@@ -6,12 +6,13 @@ export const site = {
 		'王悦的个人网站 — 全栈开发、产品设计、技术写作。专注于 Web 应用、设计系统与开源项目。',
 	url: 'https://wangyue-dewy.vercel.app',
 	locale: 'zh-CN',
-	avatar: '/avatar.svg',
-	email: 'hello@example.com',
+	avatar: '/avatar.webp?v=14',
+	email: 'iKevinAyuso@163.com',
+	phone: '13787007885',
 	location: '上海，中国',
 	social: {
 		github: 'https://github.com/Dewyue',
-		twitter: 'https://twitter.com/example',
+		instagram: 'https://www.instagram.com/dewy_justdoit/',
 		linkedin: 'https://linkedin.com/in/example',
 		wechat: 'Dewyue',
 	},
@@ -20,7 +21,7 @@ export const site = {
 export const nav = [
 	{ label: '首页', href: '/' },
 	{ label: '关于', href: '/about' },
-	{ label: '作品', href: '/projects' },
+	{ label: '作品', href: '/#portfolio' },
 	{ label: '博客', href: '/blog' },
 	{ label: '联系', href: '/contact' },
 ] as const;

@@ -19,14 +19,15 @@ import { site, aboutStory, skillCategories, timeline } from '../data/site';
 	<section class="pb-20 sm:pb-28">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
 			<div class="grid gap-5 sm:grid-cols-5">
-				<div class="tile reveal overflow-hidden p-0 sm:col-span-2">
-					<img
-						src={site.avatar}
-						alt={`${site.name} 的照片`}
-						class="h-full min-h-72 w-full object-cover"
-						width="450"
-						height="560"
-					/>
+				<div class="reveal flex items-center justify-center sm:col-span-2">
+					<div class="avatar-circle avatar-circle--wide">
+						<img
+							src={site.avatar}
+							alt={`${site.name}的头像`}
+							width="640"
+							height="640"
+						/>
+					</div>
 				</div>
 				<div class="tile reveal p-8 sm:col-span-3 sm:p-12">
 					<div class="space-y-5">

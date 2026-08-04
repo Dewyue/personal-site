@@ -1,13 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PortfolioViewer from '../components/portfolio/PortfolioViewer.astro';
 import { site, skills, skillCategories } from '../data/site';
+import { portfolioProjects } from '../data/portfolio';
 import { getCollection } from 'astro:content';
-
-const allProjects = await getCollection('projects', ({ data }) => !data.draft);
-const featuredProjects = allProjects
-	.filter((p) => p.data.featured)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
 
 const latestPosts = (await getCollection('blog', ({ data }) => !data.draft))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -21,7 +17,7 @@ function formatDate(date: Date) {
 ---
 
 <BaseLayout title={site.name} description={site.description}>
-	<!-- ============ 白色块：Hero（照片 + 大字） ============ -->
+	<!-- Hero -->
 	<section class="py-16 sm:py-24">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
 			<div class="grid items-center gap-12 sm:grid-cols-2">
@@ -35,92 +31,72 @@ function formatDate(date: Date) {
 					</p>
 					<div class="reveal mt-9 flex flex-wrap items-center gap-4">
 						<a
-							href="/projects"
+							href="#portfolio"
 							class="rounded-full bg-accent px-7 py-3 text-sm font-semibold text-white hover:bg-accent-hover"
 						>
-							查看作品
+							浏览作品集
 						</a>
-						<a href="/about" class="link-blue text-sm">
-							进一步了解 →
-						</a>
+						<a href="/about" class="link-blue text-sm">进一步了解 →</a>
 					</div>
 				</div>
 
-				<!-- 照片 -->
 				<div class="reveal order-first sm:order-none">
-					<div class="tile overflow-hidden p-0">
-						<img
-							src={site.avatar}
-							alt={`${site.name} 的照片`}
-							class="aspect-[4/5] w-full object-cover"
-							width="560"
-							height="700"
-						/>
+					<div class="avatar-circle mx-auto">
+						<img src={site.avatar} alt={`${site.name}的头像`} width="640" height="640" />
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- ============ 黑色块：精选作品 ============ -->
-	<section class="band-ink py-20 sm:py-28">
+	<!-- 作品概览：跳转到站内翻页 -->
+	<section class="pb-4 sm:pb-8">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
-			<div class="reveal mb-12 sm:mb-16">
+			<div class="reveal mb-10 sm:mb-12">
 				<p class="section-index mb-4">Selected Works</p>
 				<h2 class="display-title text-3xl sm:text-5xl">精选作品。</h2>
 			</div>
-
-			<div class="grid gap-5 sm:grid-cols-3">
+			<div class="grid gap-5 sm:grid-cols-2">
 				{
-					featuredProjects.map((project, i) => (
+					portfolioProjects.map((project) => (
 						<a
-							href={`/projects/${project.id}`}
-							class:list={[
-								'card-on-ink group block overflow-hidden rounded-[1.75rem] transition-all duration-300 hover:-translate-y-1.5',
-								i === 0 && 'sm:col-span-2',
-							]}
+							href={`/?page=${project.startPage}#portfolio`}
+							class="tile tile-hover group reveal block overflow-hidden"
+							data-jump-page={project.startPage}
 						>
 							<div class="overflow-hidden">
-								{project.data.image ? (
-									<img
-										src={project.data.image}
-										alt={project.data.title}
-										class:list={[
-											'w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]',
-											i === 0 ? 'aspect-[16/9]' : 'aspect-[16/10]',
-										]}
-									/>
-								) : (
-									<div class="flex aspect-[16/10] items-center justify-center text-4xl opacity-40">📦</div>
-								)}
+								<img
+									src={project.cover}
+									alt={project.title}
+									class="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+									loading="lazy"
+								/>
 							</div>
 							<div class="p-7">
-								<h3 class="text-xl font-semibold tracking-tight group-hover:text-accent">
-									{project.data.title}
-								</h3>
-								<p class="mt-2 line-clamp-2 text-sm leading-relaxed text-[var(--color-on-ink-muted)]">
-									{project.data.description}
+								<p class="text-xs font-semibold tracking-wider text-accent">
+									{project.number} · {project.category}
 								</p>
+								<h3 class="mt-2 text-xl font-semibold tracking-tight">{project.title}</h3>
+								<p class="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">{project.summary}</p>
+								<span class="link-blue mt-4 inline-block text-sm">在作品集中查看 →</span>
 							</div>
 						</a>
 					))
 				}
 			</div>
-
-			<div class="reveal mt-10">
-				<a href="/projects" class="link-blue text-sm">查看全部作品 →</a>
-			</div>
 		</div>
 	</section>
 
-	<!-- ============ 白色块：技能（填色瓦片） ============ -->
+	<!-- 站内内嵌完整作品集 -->
+	<PortfolioViewer />
+
+	<!-- 技能 -->
 	<section class="py-20 sm:py-28">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
-			<div class="reveal mb-12 sm:mb-16 text-center">
+			<div class="reveal mb-12 text-center sm:mb-16">
 				<p class="section-index mb-4">Capabilities</p>
 				<h2 class="display-title text-3xl sm:text-5xl">能做什么。</h2>
 			</div>
-
 			<div class="grid gap-5 sm:grid-cols-3">
 				{
 					skillCategories.map((cat) => (
@@ -141,7 +117,6 @@ function formatDate(date: Date) {
 		</div>
 	</section>
 
-	<!-- ============ 黑色条：技能跑马灯 ============ -->
 	<div class="band-ink overflow-hidden py-5" aria-label="技能一览">
 		<div class="marquee-track items-center gap-10">
 			{
@@ -155,42 +130,55 @@ function formatDate(date: Date) {
 		</div>
 	</div>
 
-	<!-- ============ 白色块：最新文章 ============ -->
+	<!-- 博客示例保留 -->
 	<section class="py-20 sm:py-28">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
 			<div class="reveal mb-12 sm:mb-16">
 				<p class="section-index mb-4">Journal</p>
 				<h2 class="display-title text-3xl sm:text-5xl">最新文章。</h2>
 			</div>
-
 			<div class="grid gap-5 sm:grid-cols-3">
 				{
 					latestPosts.map((post) => (
-						<a
-							href={`/blog/${post.id}`}
-							class="tile group tile-hover flex flex-col p-8"
-						>
-							<time
-								class="text-xs font-medium text-muted"
-								datetime={post.data.pubDate.toISOString()}
-							>
+						<a href={`/blog/${post.id}`} class="tile group tile-hover flex flex-col p-8">
+							<time class="text-xs font-medium text-muted" datetime={post.data.pubDate.toISOString()}>
 								{formatDate(post.data.pubDate)}
 							</time>
 							<h3 class="mt-3 text-xl font-semibold leading-snug tracking-tight group-hover:text-accent">
 								{post.data.title}
 							</h3>
-							<p class="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">
-								{post.data.description}
-							</p>
+							<p class="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">{post.data.description}</p>
 							<p class="link-blue mt-5 text-sm">阅读全文 →</p>
 						</a>
 					))
 				}
 			</div>
-
 			<div class="reveal mt-10 text-center">
 				<a href="/blog" class="link-blue text-sm">浏览全部文章 →</a>
 			</div>
 		</div>
 	</section>
 </BaseLayout>
+
+<script>
+	function jumpToPortfolioPage(page: number) {
+		const viewer = document.querySelector<HTMLElement>('.portfolio-viewer');
+		if (!viewer) return;
+		viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		viewer.dispatchEvent(new CustomEvent('portfolio:goto', { detail: { page } }));
+	}
+
+	document.querySelectorAll<HTMLAnchorElement>('[data-jump-page]').forEach((link) => {
+		link.addEventListener('click', (e) => {
+			const page = Number(link.dataset.jumpPage);
+			if (!page) return;
+			e.preventDefault();
+			jumpToPortfolioPage(page);
+		});
+	});
+
+	const pageFromQuery = Number(new URLSearchParams(window.location.search).get('page'));
+	if (pageFromQuery) {
+		requestAnimationFrame(() => jumpToPortfolioPage(pageFromQuery));
+	}
+</script>
