@@ -6,6 +6,8 @@ const year = new Date().getFullYear();
 const socials = [
 	{ label: 'GitHub', href: site.social.github },
 	{ label: 'Instagram', href: site.social.instagram },
+	{ label: '小红书', href: site.social.xiaohongshu },
+	{ label: '抖音', href: site.social.douyin },
 	{ label: 'LinkedIn', href: site.social.linkedin },
 ] as const;
 ---
@@ -57,9 +59,6 @@ const socials = [
 							</li>
 						))
 					}
-					<li>
-						<span class="text-sm text-[var(--color-on-ink-muted)]">微信：{site.social.wechat}</span>
-					</li>
 				</ul>
 			</div>
 
@@ -70,6 +69,9 @@ const socials = [
 						<a href={`mailto:${site.email}`} class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]">
 							{site.email}
 						</a>
+					</li>
+					<li>
+						<span class="text-sm text-[var(--color-on-ink-muted)]">微信：{site.social.wechat}</span>
 					</li>
 					<li><span class="text-sm text-[var(--color-on-ink-muted)]">{site.location}</span></li>
 				</ul>

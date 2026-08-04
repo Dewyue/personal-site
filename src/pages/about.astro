@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site, aboutStory, skillCategories, timeline } from '../data/site';
+
+const timelineGroups = [
+	{ title: '实习经历', items: timeline.filter((item) => item.category === '实习经历') },
+	{ title: '项目经历', items: timeline.filter((item) => item.category === '项目经历') },
+	{ title: '工作坊 / 学术', items: timeline.filter((item) => item.category === '工作坊 / 学术') },
+];
 ---
 
 <BaseLayout title="关于我" description={`了解 ${site.name} 的故事、经历与技能。`}>
@@ -9,7 +15,7 @@ import { site, aboutStory, skillCategories, timeline } from '../data/site';
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
 			<p class="section-index reveal mb-5">About</p>
 			<h1 class="display-title reveal max-w-3xl text-4xl sm:text-6xl">
-				工程与设计，<br />两种语言，一个目标。
+				用代码与设计，<br />把体验做得有温度。
 			</h1>
 			<p class="reveal mt-8 max-w-2xl text-xl leading-relaxed text-muted">{aboutStory.intro}</p>
 		</div>
@@ -43,7 +49,7 @@ import { site, aboutStory, skillCategories, timeline } from '../data/site';
 		</div>
 	</section>
 
-	<!-- 黑色块：职业时间线 -->
+	<!-- 黑色块：经历（三类竖向排布） -->
 	<section class="band-ink py-20 sm:py-28">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
 			<div class="reveal mb-12 sm:mb-16">
@@ -51,14 +57,27 @@ import { site, aboutStory, skillCategories, timeline } from '../data/site';
 				<h2 class="display-title text-3xl sm:text-5xl">走过的路。</h2>
 			</div>
 
-			<div class="grid gap-5 sm:grid-cols-3">
+			<div class="space-y-14 sm:space-y-16">
 				{
-					timeline.map((item) => (
-						<div class="card-on-ink reveal rounded-[1.75rem] p-8 transition-transform duration-300 hover:-translate-y-1">
-							<p class="text-sm font-semibold text-accent">{item.year}</p>
-							<h3 class="mt-3 text-xl font-semibold tracking-tight">{item.title}</h3>
-							<p class="mt-1 text-sm text-[var(--color-on-ink-muted)]">{item.company}</p>
-							<p class="mt-4 text-sm leading-relaxed text-[var(--color-on-ink-muted)]">{item.description}</p>
+					timelineGroups.map((group) => (
+						<div class="reveal">
+							<h3 class="mb-5 text-sm font-semibold tracking-[0.14em] text-accent uppercase">
+								{group.title}
+							</h3>
+							<div class="flex flex-col gap-4">
+								{group.items.map((item) => (
+									<div class="card-on-ink rounded-[1.75rem] p-7 transition-transform duration-300 hover:-translate-y-1 sm:p-8">
+										<div class="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+											<div>
+												<h4 class="text-xl font-semibold tracking-tight">{item.title}</h4>
+												<p class="mt-1 text-sm text-[var(--color-on-ink-muted)]">{item.company}</p>
+											</div>
+											<p class="shrink-0 text-sm font-medium text-[var(--color-on-ink-muted)]">{item.year}</p>
+										</div>
+										<p class="mt-4 text-sm leading-relaxed text-[var(--color-on-ink-muted)]">{item.description}</p>
+									</div>
+								))}
+							</div>
 						</div>
 					))
 				}

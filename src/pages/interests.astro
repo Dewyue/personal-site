@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { interests, interestGroups } from '../data/site';
+
+const marqueeItems = [...interests, ...interests];
+---
+
+<BaseLayout title="兴趣爱好" description="工作之外：潜水、电影、攀岩、咖啡，以及更多让生活有温度的事。">
+	<!-- Hero：左右分栏 -->
+	<section class="py-16 sm:py-24">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<div class="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+				<div>
+					<p class="section-index reveal mb-5">Interests · {interests.length}</p>
+					<h1 class="display-title reveal max-w-3xl text-4xl sm:text-6xl lg:text-7xl">
+						工作之外，<br />这些事让我在场。
+					</h1>
+				</div>
+				<p class="reveal max-w-md text-base leading-relaxed text-muted lg:justify-self-end lg:pb-2 lg:text-right">
+					代码与设计之外，我也在水下、岩壁、舞台与日常里找感觉——认真玩，同样是一种创作训练。
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- 跑马灯 -->
+	<div class="band-ink overflow-hidden py-5" aria-label="兴趣一览">
+		<div class="marquee-track items-center gap-10">
+			{
+				marqueeItems.map((item) => (
+					<span class="flex shrink-0 items-center gap-10">
+						<span class="text-sm font-medium tracking-[0.12em]">{item.name}</span>
+						<span class="h-1 w-1 rounded-full bg-accent" />
+					</span>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- 分组非对称排版 -->
+	{
+		interestGroups.map((group, gi) => {
+			const items = interests.filter((item) => item.group === group.id);
+			const invert = gi % 2 === 1;
+			return (
+				<section class:list={[invert && 'band-ink', 'py-16 sm:py-24']}>
+					<div class="mx-auto max-w-6xl px-4 sm:px-6">
+						<div class="reveal mb-10 flex flex-col gap-3 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+							<div>
+								<p class="section-index mb-3">{group.en}</p>
+								<h2 class="display-title text-3xl sm:text-4xl">{group.label}</h2>
+							</div>
+							<p
+								class:list={[
+									'text-sm',
+									invert ? 'text-[var(--color-on-ink-muted)]' : 'text-muted',
+								]}
+							>
+								{String(items.length).padStart(2, '0')} topics
+							</p>
+						</div>
+
+						<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+							{items.map((item, i) => (
+								<article
+									class:list={[
+										'reveal group overflow-hidden rounded-[1.75rem] p-7 transition-all duration-300 sm:p-8',
+										invert
+											? 'card-on-ink hover:-translate-y-1'
+											: 'tile tile-hover',
+										item.span === 'wide' ? 'sm:col-span-2 lg:col-span-4' : 'lg:col-span-2',
+									]}
+									style={`transition-delay: ${Math.min(i * 50, 250)}ms`}
+								>
+									<div class="flex h-full min-h-[10.5rem] flex-col justify-between sm:min-h-[12rem]">
+										<div class="flex items-start justify-between gap-4">
+											<span
+												class:list={[
+													'text-xs font-semibold tracking-[0.16em]',
+													invert ? 'text-accent' : 'text-accent',
+												]}
+											>
+												{String(i + 1).padStart(2, '0')}
+											</span>
+											<span
+												class:list={[
+													'text-xs tracking-wide',
+													invert ? 'text-[var(--color-on-ink-muted)]' : 'text-muted',
+												]}
+											>
+												{item.note}
+											</span>
+										</div>
+										<div>
+											<h3
+												class:list={[
+													'text-2xl font-semibold tracking-tight sm:text-3xl',
+													!invert && 'group-hover:text-accent',
+													invert && 'transition-colors group-hover:text-accent',
+												]}
+											>
+												{item.name}
+											</h3>
+											<p
+												class:list={[
+													'mt-3 max-w-md text-sm leading-relaxed',
+													invert ? 'text-[var(--color-on-ink-muted)]' : 'text-muted',
+												]}
+											>
+												{item.blurb}
+											</p>
+										</div>
+									</div>
+								</article>
+							))}
+						</div>
+					</div>
+				</section>
+			);
+		})
+	}
+
+	<!-- 收束 -->
+	<section class="pb-20 sm:pb-28">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<div class="tile reveal flex flex-col items-start justify-between gap-8 p-10 sm:flex-row sm:items-center sm:p-14">
+				<div>
+					<p class="section-index mb-3">Together</p>
+					<h2 class="display-title text-3xl sm:text-4xl">有共同爱好？</h2>
+					<p class="mt-3 max-w-md text-muted">潜水局、桌游夜、即兴演出，或者只是喝杯咖啡聊聊都行。</p>
+				</div>
+				<a
+					href="/contact"
+					class="rounded-full bg-accent px-7 py-3 text-sm font-semibold text-white hover:bg-accent-hover"
+				>
+					来聊聊 →
+				</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
