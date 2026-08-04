@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 .vercel
 .env*
+
+# large local portfolio pdf
+public/portfolio/*.pdf

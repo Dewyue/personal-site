@@ -4,7 +4,6 @@ export const portfolioMeta = {
 	title: 'Dewy’s Portfolio 2026',
 	subtitle: '王悦 · 作品集',
 	totalPages: 31,
-	pdfPath: '/portfolio/wangyue-portfolio-2026.pdf',
 	pagePath: (n: number) => `/portfolio/page-${String(n).padStart(2, '0')}.jpg`,
 } as const;
 

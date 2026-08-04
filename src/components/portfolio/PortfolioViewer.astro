@@ -18,21 +18,12 @@ const pages = Array.from({ length: portfolioMeta.totalPages }, (_, i) => i + 1);
 	data-initial={initialPage}
 >
 	<div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-		<div class="reveal mb-10 flex flex-col gap-6 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
-			<div>
-				<p class="section-index mb-4">Portfolio · {portfolioMeta.totalPages} Pages</p>
-				<h2 class="display-title text-3xl sm:text-5xl">作品集。</h2>
-				<p class="mt-4 max-w-xl text-[15px] leading-relaxed text-[var(--color-on-ink-muted)]">
-					完整作品集直接嵌在本页浏览，无需跳转外链。可用键盘 ← → 翻页。
-				</p>
-			</div>
-			<a
-				href={portfolioMeta.pdfPath}
-				download="王悦-作品集2026.pdf"
-				class="link-blue shrink-0 text-sm"
-			>
-				下载 PDF ↓
-			</a>
+		<div class="reveal mb-10 sm:mb-12">
+			<p class="section-index mb-4">Portfolio · {portfolioMeta.totalPages} Pages</p>
+			<h2 class="display-title text-3xl sm:text-5xl">作品集。</h2>
+			<p class="mt-4 max-w-xl text-[15px] leading-relaxed text-[var(--color-on-ink-muted)]">
+				完整作品集直接嵌在本页浏览，无需跳转外链。可用键盘 ← → 翻页。
+			</p>
 		</div>
 
 		<!-- 项目快捷入口 -->
