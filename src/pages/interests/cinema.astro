@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { cinemaPage, lifeMovies } from '../../data/cinema';
+---
+
+<BaseLayout title={cinemaPage.title} description={cinemaPage.description}>
+	<section class="py-16 sm:py-24">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<a
+				href="/interests"
+				class="reveal mb-10 inline-flex items-center gap-2 text-sm text-muted hover:text-accent"
+			>
+				← 兴趣
+			</a>
+			<p class="section-index reveal mb-5">{cinemaPage.en}</p>
+			<h1 class="display-title reveal text-4xl sm:text-6xl lg:text-7xl">{cinemaPage.title}</h1>
+			<div class="reveal mt-8 max-w-xl space-y-3 text-base leading-relaxed text-muted sm:text-lg">
+				<p>{cinemaPage.intro}</p>
+				<p>{cinemaPage.habit}</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="band-ink py-16 sm:py-24">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<div class="reveal mb-10 sm:mb-14">
+				<p class="section-index mb-3">Life Ranking</p>
+				<h2 class="display-title text-3xl sm:text-4xl">人生电影</h2>
+				<p class="mt-3 text-sm text-[var(--color-on-ink-muted)]">点击海报前往 IMDb</p>
+			</div>
+
+			<ol class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					lifeMovies.map((movie, i) => (
+						<li class="reveal" style={`transition-delay: ${Math.min(i * 60, 300)}ms`}>
+							<a
+								href={movie.imdb}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="group block"
+							>
+								<div class="overflow-hidden rounded-[1.25rem] bg-[var(--color-on-ink-card)]">
+									<img
+										src={movie.poster}
+										alt={`${movie.title} 海报`}
+										width="380"
+										height="562"
+										loading="lazy"
+										class="aspect-[2/3] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+									/>
+								</div>
+								<div class="mt-4 flex items-baseline gap-3">
+									<span class="text-sm font-semibold tracking-[0.14em] text-accent">
+										{String(movie.rank).padStart(2, '0')}
+									</span>
+									<div class="min-w-0">
+										<h3 class="truncate text-lg font-semibold tracking-tight transition-colors group-hover:text-accent">
+											{movie.title}
+										</h3>
+										<p class="mt-0.5 truncate text-xs text-[var(--color-on-ink-muted)]">
+											{movie.titleEn} · {movie.year}
+										</p>
+									</div>
+								</div>
+							</a>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<section class="py-16 sm:py-24">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<a href="/interests" class="text-sm font-medium text-muted hover:text-accent">
+				← 返回兴趣
+			</a>
+		</div>
+	</section>
+</BaseLayout>

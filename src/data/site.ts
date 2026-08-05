@@ -165,6 +165,7 @@ export const interests = [
 		group: '感官',
 		blurb: '看别人怎么讲故事，也看光影怎么说话。',
 		span: 'normal' as const,
+		href: '/interests/cinema',
 	},
 	{
 		name: '咖啡',

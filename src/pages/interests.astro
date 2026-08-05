@@ -61,58 +61,58 @@ const marqueeItems = [...interests, ...interests];
 						</div>
 
 						<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
-							{items.map((item, i) => (
-								<article
-									class:list={[
-										'reveal group overflow-hidden rounded-[1.75rem] p-7 transition-all duration-300 sm:p-8',
-										invert
-											? 'card-on-ink hover:-translate-y-1'
-											: 'tile tile-hover',
-										item.span === 'wide' ? 'sm:col-span-2 lg:col-span-4' : 'lg:col-span-2',
-									]}
-									style={`transition-delay: ${Math.min(i * 50, 250)}ms`}
-								>
-									<div class="flex h-full min-h-[10.5rem] flex-col justify-between sm:min-h-[12rem]">
-										<div class="flex items-start justify-between gap-4">
-											<span
-												class:list={[
-													'text-xs font-semibold tracking-[0.16em]',
-													invert ? 'text-accent' : 'text-accent',
-												]}
-											>
-												{String(i + 1).padStart(2, '0')}
-											</span>
-											<span
-												class:list={[
-													'text-xs tracking-wide',
-													invert ? 'text-[var(--color-on-ink-muted)]' : 'text-muted',
-												]}
-											>
-												{item.note}
-											</span>
+							{items.map((item, i) => {
+								const href = 'href' in item ? item.href : undefined;
+								const Tag = href ? 'a' : 'article';
+								return (
+									<Tag
+										{...(href ? { href } : {})}
+										class:list={[
+											'reveal group overflow-hidden rounded-[1.75rem] p-7 transition-all duration-300 sm:p-8',
+											invert
+												? 'card-on-ink hover:-translate-y-1'
+												: 'tile tile-hover',
+											item.span === 'wide' ? 'sm:col-span-2 lg:col-span-4' : 'lg:col-span-2',
+											href && 'block',
+										]}
+										style={`transition-delay: ${Math.min(i * 50, 250)}ms`}
+									>
+										<div class="flex h-full min-h-[10.5rem] flex-col justify-between sm:min-h-[12rem]">
+											<div class="flex items-start justify-between gap-4">
+												<span class="text-xs font-semibold tracking-[0.16em] text-accent">
+													{String(i + 1).padStart(2, '0')}
+												</span>
+												<span
+													class:list={[
+														'text-xs tracking-wide',
+														invert ? 'text-[var(--color-on-ink-muted)]' : 'text-muted',
+													]}
+												>
+													{href ? '查看 →' : item.note}
+												</span>
+											</div>
+											<div>
+												<h3
+													class:list={[
+														'text-2xl font-semibold tracking-tight sm:text-3xl',
+														'transition-colors group-hover:text-accent',
+													]}
+												>
+													{item.name}
+												</h3>
+												<p
+													class:list={[
+														'mt-3 max-w-md text-sm leading-relaxed',
+														invert ? 'text-[var(--color-on-ink-muted)]' : 'text-muted',
+													]}
+												>
+													{item.blurb}
+												</p>
+											</div>
 										</div>
-										<div>
-											<h3
-												class:list={[
-													'text-2xl font-semibold tracking-tight sm:text-3xl',
-													!invert && 'group-hover:text-accent',
-													invert && 'transition-colors group-hover:text-accent',
-												]}
-											>
-												{item.name}
-											</h3>
-											<p
-												class:list={[
-													'mt-3 max-w-md text-sm leading-relaxed',
-													invert ? 'text-[var(--color-on-ink-muted)]' : 'text-muted',
-												]}
-											>
-												{item.blurb}
-											</p>
-										</div>
-									</div>
-								</article>
-							))}
+									</Tag>
+								);
+							})}
 						</div>
 					</div>
 				</section>

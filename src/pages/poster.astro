@@ -1,0 +1,59 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+const pageTitle = `个人海报 · ${site.name}`;
+---
+
+<!doctype html>
+<html lang={site.locale}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{pageTitle}</title>
+		<meta name="description" content={`${site.name} — ${site.title}。${site.tagline}`} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="min-h-screen bg-surface text-foreground antialiased">
+		<main class="flex min-h-screen flex-col items-center justify-center px-6 py-16">
+			<article class="w-full max-w-sm text-center">
+				<div class="mx-auto mb-8 overflow-hidden rounded-[2rem] bg-surface-muted shadow-[0_24px_60px_-28px_rgb(0_0_0_/_0.35)]">
+					<img
+						src={site.avatar}
+						alt={`${site.name}的个人海报`}
+						width="640"
+						height="640"
+						class="aspect-square w-full object-cover"
+					/>
+				</div>
+
+				<p class="mb-2 text-xs font-semibold tracking-[0.2em] text-accent uppercase">
+					{site.location}
+				</p>
+				<h1 class="display-title text-4xl sm:text-5xl">{site.name}</h1>
+				<p class="mt-3 text-sm font-medium text-muted">{site.title}</p>
+				<p class="mx-auto mt-6 max-w-xs text-sm leading-relaxed text-muted">
+					{site.tagline}
+				</p>
+
+				<div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+					<a
+						href={`mailto:${site.email}`}
+						class="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white hover:bg-accent-hover"
+					>
+						发邮件
+					</a>
+					<a href="/" class="text-sm text-muted hover:text-accent">
+						回到主页 →
+					</a>
+				</div>
+			</article>
+		</main>
+	</body>
+</html>
