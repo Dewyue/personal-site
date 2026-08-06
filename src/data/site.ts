@@ -1,5 +1,7 @@
 export const site = {
 	name: '王悦',
+	englishName: 'Dewy',
+	sloganLines: ['Just do it', 'Just Dewy'] as const,
 	title: '全栈开发者 · 产品设计师',
 	tagline: '用代码与设计，构建有温度的数字体验',
 	description:

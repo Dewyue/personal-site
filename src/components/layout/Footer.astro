@@ -21,8 +21,10 @@ const socials = [
 				来聊聊吧
 				<span class="ml-1 inline-block text-accent transition-transform duration-300 group-hover:translate-x-2">→</span>
 			</a>
-			<p class="mt-6 max-w-md text-[15px] leading-relaxed text-[var(--color-on-ink-muted)]">
-				{site.tagline}
+			<p class="mt-6 max-w-md text-[15px] leading-relaxed tracking-[0.06em] text-[var(--color-on-ink-muted)]">
+				{site.sloganLines.map((line) => (
+					<span class="block">{line}</span>
+				))}
 			</p>
 		</div>
 
