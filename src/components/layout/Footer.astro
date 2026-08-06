@@ -21,14 +21,12 @@ const socials = [
 				来聊聊吧
 				<span class="ml-1 inline-block text-accent transition-transform duration-300 group-hover:translate-x-2">→</span>
 			</a>
-			<p class="mt-6 max-w-md text-[15px] leading-relaxed tracking-[0.06em] text-[var(--color-on-ink-muted)]">
-				{site.sloganLines.map((line) => (
-					<span class="block">{line}</span>
-				))}
+			<p class="mt-6 max-w-md text-[15px] leading-relaxed text-[var(--color-on-ink-muted)]">
+				{site.tagline}
 			</p>
 		</div>
 
-		<div class="grid gap-10 pt-4 sm:grid-cols-3">
+		<div class="grid gap-10 pt-4 sm:grid-cols-3 sm:items-stretch">
 			<div>
 				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">导航</p>
 				<ul class="mt-4 space-y-2.5">
@@ -64,7 +62,7 @@ const socials = [
 				</ul>
 			</div>
 
-			<div>
+			<div class="flex h-full flex-col">
 				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">信息</p>
 				<ul class="mt-4 space-y-2.5">
 					<li>
@@ -77,6 +75,11 @@ const socials = [
 					</li>
 					<li><span class="text-sm text-[var(--color-on-ink-muted)]">{site.location}</span></li>
 				</ul>
+				<p class="mt-auto pt-10 text-[15px] leading-relaxed tracking-[0.06em] text-[var(--color-on-ink-muted)]">
+					{site.sloganLines.map((line) => (
+						<span class="block">{line}</span>
+					))}
+				</p>
 			</div>
 		</div>
 
