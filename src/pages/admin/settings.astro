@@ -1,0 +1,38 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { adminEmail } from '../../lib/cms/auth';
+
+const email = adminEmail();
+const hasTurso = Boolean(import.meta.env.TURSO_DATABASE_URL || process.env.TURSO_DATABASE_URL);
+---
+
+<AdminLayout title="设置" description="账号与数据存储说明。">
+	<section class="rounded-2xl border border-border bg-surface p-6">
+		<h2 class="text-base font-semibold">管理员账号</h2>
+		<p class="mt-3 text-sm text-muted">当前登录邮箱由环境变量控制。</p>
+		<p class="mt-2 text-sm"><span class="text-muted">邮箱：</span>{email}</p>
+		<p class="mt-4 text-xs leading-relaxed text-muted">
+			在 <code class="rounded bg-surface-muted px-1">.env</code> 中设置
+			<code class="rounded bg-surface-muted px-1">ADMIN_EMAIL</code>、
+			<code class="rounded bg-surface-muted px-1">ADMIN_PASSWORD</code>、
+			<code class="rounded bg-surface-muted px-1">ADMIN_SESSION_SECRET</code>。
+		</p>
+	</section>
+
+	<section class="mt-6 rounded-2xl border border-border bg-surface p-6">
+		<h2 class="text-base font-semibold">数据存储</h2>
+		<p class="mt-3 text-sm text-muted">
+			本地开发使用 <code class="rounded bg-surface-muted px-1">data/cms.db</code>（SQLite / libSQL）。
+		</p>
+		<p class="mt-2 text-sm">
+			线上持久化：{hasTurso ? '已检测到 Turso 配置' : '未配置 Turso（Vercel 需配置后才可在线改库）'}
+		</p>
+		<p class="mt-4 text-xs leading-relaxed text-muted">
+			生产环境请创建免费 Turso 库，并配置
+			<code class="rounded bg-surface-muted px-1">TURSO_DATABASE_URL</code> 与
+			<code class="rounded bg-surface-muted px-1">TURSO_AUTH_TOKEN</code>。
+		</p>
+	</section>
+</AdminLayout>

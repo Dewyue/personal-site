@@ -1,0 +1,39 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { readStore } from '../../lib/cms/store';
+
+const store = await readStore();
+const stats = [
+	{ label: '电影', value: store.movies.length, href: '/admin/movies' },
+	{ label: '作品', value: store.projects.length, href: '/admin/projects' },
+	{ label: '技能', value: store.skills.length, href: '/admin/skills' },
+	{ label: '经历', value: store.timeline.length, href: '/admin/timeline' },
+];
+---
+
+<AdminLayout title="概览" description="站点内容一览，从左侧进入各模块管理。">
+	<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		{
+			stats.map((item) => (
+				<a
+					href={item.href}
+					class="rounded-2xl border border-border bg-surface p-6 transition hover:-translate-y-0.5 hover:border-accent"
+				>
+					<p class="text-sm text-muted">{item.label}</p>
+					<p class="mt-2 text-3xl font-semibold tracking-tight">{item.value}</p>
+				</a>
+			))
+		}
+	</div>
+
+	<div class="mt-8 rounded-2xl border border-border bg-surface p-6">
+		<h2 class="text-lg font-semibold">当前站点信息</h2>
+		<p class="mt-3 text-sm text-muted">{store.profile.name} · {store.profile.title}</p>
+		<p class="mt-1 text-sm text-muted">{store.profile.tagline}</p>
+		<p class="mt-4 text-sm">
+			<a href="/admin/profile" class="text-accent hover:underline">编辑个人信息 →</a>
+		</p>
+	</div>
+</AdminLayout>

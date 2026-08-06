@@ -1,0 +1,94 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { listSkills } from '../../lib/cms/store';
+
+const skills = await listSkills();
+---
+
+<AdminLayout title="技能管理" description="首页技能条：名称与熟练度。">
+	<div class="mb-4 flex justify-end">
+		<button id="add-skill" type="button" class="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white"
+			>+ 添加技能</button
+		>
+	</div>
+	<div id="skill-list" class="space-y-3" data-skills={JSON.stringify(skills)}></div>
+	<div class="mt-6 flex items-center gap-3">
+		<button id="save-skills" type="button" class="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white"
+			>保存全部</button
+		>
+		<p id="skill-status" class="text-sm text-muted"></p>
+	</div>
+</AdminLayout>
+
+<style>
+	.field {
+		width: 100%;
+		border-radius: 0.75rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		padding: 0.5rem 0.75rem;
+		font-size: 0.875rem;
+	}
+</style>
+
+<script>
+	type Skill = { id: string; name: string; level: number; sort: number };
+	const listEl = document.getElementById('skill-list')!;
+	let skills: Skill[] = JSON.parse(listEl.dataset.skills || '[]');
+
+	function render() {
+		listEl.innerHTML = skills
+			.map(
+				(s, i) => `
+			<div class="grid grid-cols-[1fr_100px_80px_auto] items-center gap-3 rounded-xl border border-border bg-surface p-3" data-i="${i}">
+				<input class="field" data-k="name" value="${s.name.replaceAll('"', '&quot;')}" />
+				<input class="field" data-k="level" type="number" min="0" max="100" value="${s.level}" />
+				<input class="field" data-k="sort" type="number" value="${s.sort}" />
+				<button type="button" data-del class="text-xs text-red-500">删除</button>
+			</div>`,
+			)
+			.join('');
+	}
+
+	listEl.addEventListener('input', (e) => {
+		const t = e.target as HTMLInputElement;
+		const row = t.closest('[data-i]') as HTMLElement;
+		const i = Number(row.dataset.i);
+		const k = t.dataset.k as keyof Skill;
+		if (k === 'name') skills[i].name = t.value;
+		else skills[i][k] = Number(t.value) as never;
+	});
+
+	listEl.addEventListener('click', (e) => {
+		const t = e.target as HTMLElement;
+		if (!t.matches('[data-del]')) return;
+		const i = Number((t.closest('[data-i]') as HTMLElement).dataset.i);
+		skills.splice(i, 1);
+		render();
+	});
+
+	document.getElementById('add-skill')!.addEventListener('click', () => {
+		skills.push({
+			id: Math.random().toString(36).slice(2, 12),
+			name: '',
+			level: 80,
+			sort: skills.length + 1,
+		});
+		render();
+	});
+
+	document.getElementById('save-skills')!.addEventListener('click', async () => {
+		const status = document.getElementById('skill-status')!;
+		status.textContent = '保存中…';
+		const res = await fetch('/api/admin/data?resource=skills', {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(skills),
+		});
+		status.textContent = res.ok ? '已保存' : '保存失败';
+	});
+
+	render();
+</script>

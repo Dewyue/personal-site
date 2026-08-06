@@ -1,0 +1,140 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { readStore } from '../../lib/cms/store';
+
+const { profile, cinemaIntro, cinemaHabit } = await readStore();
+const paragraphs = profile.aboutParagraphs.join('\n\n');
+---
+
+<AdminLayout title="个人信息" description="姓名、联系方式、关于文案与电影页引言。">
+	<form id="profile-form" class="space-y-8">
+		<section class="rounded-2xl border border-border bg-surface p-6">
+			<h2 class="text-base font-semibold">基础信息</h2>
+			<div class="mt-4 grid gap-4 sm:grid-cols-2">
+				<label class="text-sm">姓名<input name="name" value={profile.name} class="field" /></label>
+				<label class="text-sm">头衔<input name="title" value={profile.title} class="field" /></label>
+				<label class="text-sm sm:col-span-2"
+					>标语<input name="tagline" value={profile.tagline} class="field" /></label
+				>
+				<label class="text-sm sm:col-span-2"
+					>站点描述<textarea name="description" rows="2" class="field">{profile.description}</textarea></label
+				>
+				<label class="text-sm">邮箱<input name="email" value={profile.email} class="field" /></label>
+				<label class="text-sm">电话<input name="phone" value={profile.phone} class="field" /></label>
+				<label class="text-sm">地点<input name="location" value={profile.location} class="field" /></label>
+				<label class="text-sm">头像路径<input name="avatar" value={profile.avatar} class="field" /></label>
+			</div>
+		</section>
+
+		<section class="rounded-2xl border border-border bg-surface p-6">
+			<h2 class="text-base font-semibold">社交链接</h2>
+			<div class="mt-4 grid gap-4 sm:grid-cols-2">
+				<label class="text-sm">微信<input name="wechat" value={profile.wechat} class="field" /></label>
+				<label class="text-sm">GitHub<input name="github" value={profile.github} class="field" /></label>
+				<label class="text-sm">Instagram<input name="instagram" value={profile.instagram} class="field" /></label>
+				<label class="text-sm"
+					>小红书<input name="xiaohongshu" value={profile.xiaohongshu} class="field" /></label
+				>
+				<label class="text-sm">抖音<input name="douyin" value={profile.douyin} class="field" /></label>
+				<label class="text-sm">LinkedIn<input name="linkedin" value={profile.linkedin} class="field" /></label>
+			</div>
+		</section>
+
+		<section class="rounded-2xl border border-border bg-surface p-6">
+			<h2 class="text-base font-semibold">关于页文案</h2>
+			<label class="mt-4 block text-sm"
+				>开场引言<textarea name="aboutIntro" rows="3" class="field">{profile.aboutIntro}</textarea></label
+			>
+			<label class="mt-4 block text-sm"
+				>正文（段落之间空一行）<textarea name="aboutParagraphs" rows="8" class="field">{paragraphs}</textarea
+				></label
+			>
+		</section>
+
+		<section class="rounded-2xl border border-border bg-surface p-6">
+			<h2 class="text-base font-semibold">电影页文案</h2>
+			<label class="mt-4 block text-sm"
+				>简介<textarea name="cinemaIntro" rows="2" class="field">{cinemaIntro}</textarea></label
+			>
+			<label class="mt-4 block text-sm"
+				>观影习惯<textarea name="cinemaHabit" rows="2" class="field">{cinemaHabit}</textarea></label
+			>
+		</section>
+
+		<div class="flex items-center gap-3">
+			<button type="submit" class="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white hover:bg-accent-hover"
+				>保存</button
+			>
+			<p id="profile-status" class="text-sm text-muted"></p>
+		</div>
+	</form>
+</AdminLayout>
+
+<style>
+	.field {
+		margin-top: 0.375rem;
+		display: block;
+		width: 100%;
+		border-radius: 0.75rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		padding: 0.625rem 0.75rem;
+		font-size: 0.875rem;
+		outline: none;
+	}
+	.field:focus {
+		border-color: var(--color-accent);
+	}
+</style>
+
+<script>
+	const form = document.getElementById('profile-form') as HTMLFormElement;
+	const status = document.getElementById('profile-status')!;
+
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		status.textContent = '保存中…';
+		const fd = new FormData(form);
+		const profile = {
+			name: String(fd.get('name')),
+			title: String(fd.get('title')),
+			tagline: String(fd.get('tagline')),
+			description: String(fd.get('description')),
+			email: String(fd.get('email')),
+			phone: String(fd.get('phone')),
+			location: String(fd.get('location')),
+			avatar: String(fd.get('avatar')),
+			wechat: String(fd.get('wechat')),
+			github: String(fd.get('github')),
+			instagram: String(fd.get('instagram')),
+			xiaohongshu: String(fd.get('xiaohongshu')),
+			douyin: String(fd.get('douyin')),
+			linkedin: String(fd.get('linkedin')),
+			aboutIntro: String(fd.get('aboutIntro')),
+			aboutParagraphs: String(fd.get('aboutParagraphs'))
+				.split(/\n\s*\n/)
+				.map((s) => s.trim())
+				.filter(Boolean),
+		};
+
+		const [r1, r2] = await Promise.all([
+			fetch('/api/admin/data?resource=profile', {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(profile),
+			}),
+			fetch('/api/admin/data?resource=cinema', {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					intro: String(fd.get('cinemaIntro')),
+					habit: String(fd.get('cinemaHabit')),
+				}),
+			}),
+		]);
+
+		status.textContent = r1.ok && r2.ok ? '已保存' : '保存失败';
+	});
+</script>

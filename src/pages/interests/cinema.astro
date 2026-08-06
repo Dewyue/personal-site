@@ -1,9 +1,27 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { cinemaPage, lifeMovies } from '../../data/cinema';
+import { readStore } from '../../lib/cms/store';
+import { toMoviesFromStore } from '../../lib/cms/public';
+import { cinemaPage as fallbackMeta, lifeMovies as fallbackMovies } from '../../data/cinema';
+
+let intro = fallbackMeta.intro;
+let habit = fallbackMeta.habit;
+let lifeMovies = [...fallbackMovies];
+
+try {
+	const store = await readStore();
+	intro = store.cinemaIntro || intro;
+	habit = store.cinemaHabit || habit;
+	const fromCms = toMoviesFromStore(store);
+	if (fromCms.length) lifeMovies = fromCms;
+} catch (e) {
+	console.error('CMS read failed, using fallback cinema data', e);
+}
 ---
 
-<BaseLayout title={cinemaPage.title} description={cinemaPage.description}>
+<BaseLayout title={fallbackMeta.title} description={fallbackMeta.description}>
 	<section class="py-16 sm:py-24">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
 			<a
@@ -12,11 +30,11 @@ import { cinemaPage, lifeMovies } from '../../data/cinema';
 			>
 				← 兴趣
 			</a>
-			<p class="section-index reveal mb-5">{cinemaPage.en}</p>
-			<h1 class="display-title reveal text-4xl sm:text-6xl lg:text-7xl">{cinemaPage.title}</h1>
+			<p class="section-index reveal mb-5">{fallbackMeta.en}</p>
+			<h1 class="display-title reveal text-4xl sm:text-6xl lg:text-7xl">{fallbackMeta.title}</h1>
 			<div class="reveal mt-8 max-w-xl space-y-3 text-base leading-relaxed text-muted sm:text-lg">
-				<p>{cinemaPage.intro}</p>
-				<p>{cinemaPage.habit}</p>
+				<p>{intro}</p>
+				<p>{habit}</p>
 			</div>
 		</div>
 	</section>
@@ -33,12 +51,7 @@ import { cinemaPage, lifeMovies } from '../../data/cinema';
 				{
 					lifeMovies.map((movie, i) => (
 						<li class="reveal" style={`transition-delay: ${Math.min(i * 60, 300)}ms`}>
-							<a
-								href={movie.imdb}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="group block"
-							>
+							<a href={movie.imdb} target="_blank" rel="noopener noreferrer" class="group block">
 								<div class="overflow-hidden rounded-[1.25rem] bg-[var(--color-on-ink-card)]">
 									<img
 										src={movie.poster}
@@ -72,9 +85,7 @@ import { cinemaPage, lifeMovies } from '../../data/cinema';
 
 	<section class="py-16 sm:py-24">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
-			<a href="/interests" class="text-sm font-medium text-muted hover:text-accent">
-				← 返回兴趣
-			</a>
+			<a href="/interests" class="text-sm font-medium text-muted hover:text-accent"> ← 返回兴趣 </a>
 		</div>
 	</section>
 </BaseLayout>

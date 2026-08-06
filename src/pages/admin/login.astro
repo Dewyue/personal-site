@@ -1,0 +1,73 @@
+---
+export const prerender = false;
+
+import '../../styles/global.css';
+import { getSession } from '../../lib/cms/auth';
+
+const session = await getSession(Astro.cookies);
+if (session) {
+	return Astro.redirect('/admin');
+}
+
+const error = Astro.url.searchParams.get('error');
+---
+
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>登录 · 管理后台</title>
+		<meta name="robots" content="noindex,nofollow" />
+	</head>
+	<body class="min-h-screen bg-[var(--color-surface-muted)] text-foreground antialiased">
+		<main class="flex min-h-screen items-center justify-center px-4">
+			<form
+				method="POST"
+				action="/api/admin/login"
+				class="w-full max-w-sm rounded-2xl border border-border bg-surface p-8 shadow-sm"
+			>
+				<p class="text-xs font-semibold tracking-[0.16em] text-accent uppercase">Admin</p>
+				<h1 class="mt-2 text-2xl font-semibold tracking-tight">后台管理系统</h1>
+				<p class="mt-1 text-sm text-muted">请登录以继续</p>
+
+				{
+					error && (
+						<p class="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+							{error === 'invalid' ? '邮箱或密码错误' : '登录失败，请重试'}
+						</p>
+					)
+				}
+
+				<label class="mt-6 block text-sm font-medium">
+					邮箱
+					<input
+						type="email"
+						name="email"
+						required
+						placeholder="demo@example.com"
+						autocomplete="username"
+						class="mt-1.5 w-full rounded-xl border border-border bg-surface px-3 py-2.5 text-sm outline-none focus:border-accent"
+					/>
+				</label>
+				<label class="mt-4 block text-sm font-medium">
+					密码
+					<input
+						type="password"
+						name="password"
+						required
+						placeholder="••••••••"
+						autocomplete="current-password"
+						class="mt-1.5 w-full rounded-xl border border-border bg-surface px-3 py-2.5 text-sm outline-none focus:border-accent"
+					/>
+				</label>
+				<button
+					type="submit"
+					class="mt-6 w-full rounded-full bg-accent py-2.5 text-sm font-semibold text-white hover:bg-accent-hover"
+				>
+					登录
+				</button>
+				<p class="mt-4 text-center text-xs text-muted">默认 demo@example.com / admin123456</p>
+			</form>
+		</main>
+	</body>
+</html>

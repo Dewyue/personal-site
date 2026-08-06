@@ -1,0 +1,120 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { listTimeline } from '../../lib/cms/store';
+
+const timeline = await listTimeline();
+---
+
+<AdminLayout title="经历管理" description="关于页时间线：实习 / 项目 / 工作坊。">
+	<div class="mb-4 flex justify-end">
+		<button id="add-item" type="button" class="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white"
+			>+ 添加经历</button
+		>
+	</div>
+	<div id="timeline-list" class="space-y-4" data-timeline={JSON.stringify(timeline)}></div>
+	<div class="mt-6 flex items-center gap-3">
+		<button id="save-timeline" type="button" class="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white"
+			>保存全部</button
+		>
+		<p id="timeline-status" class="text-sm text-muted"></p>
+	</div>
+</AdminLayout>
+
+<style>
+	.field {
+		width: 100%;
+		border-radius: 0.75rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		padding: 0.5rem 0.75rem;
+		font-size: 0.875rem;
+	}
+</style>
+
+<script>
+	type Item = {
+		id: string;
+		category: string;
+		year: string;
+		title: string;
+		company: string;
+		description: string;
+		sort: number;
+	};
+
+	const listEl = document.getElementById('timeline-list')!;
+	let items: Item[] = JSON.parse(listEl.dataset.timeline || '[]');
+	const esc = (s: string) => s.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
+
+	function render() {
+		listEl.innerHTML = items
+			.map(
+				(it, i) => `
+			<article class="rounded-2xl border border-border bg-surface p-5" data-i="${i}">
+				<div class="mb-3 flex justify-between">
+					<p class="text-sm font-semibold">${esc(it.title) || '未命名'}</p>
+					<button type="button" data-del class="text-xs text-red-500">删除</button>
+				</div>
+				<div class="grid gap-3 sm:grid-cols-2">
+					<label class="text-xs text-muted">分类
+						<select class="field mt-1" data-k="category">
+							<option ${it.category === '实习经历' ? 'selected' : ''}>实习经历</option>
+							<option ${it.category === '项目经历' ? 'selected' : ''}>项目经历</option>
+							<option ${it.category === '工作坊 / 学术' ? 'selected' : ''}>工作坊 / 学术</option>
+						</select>
+					</label>
+					<label class="text-xs text-muted">时间<input class="field mt-1" data-k="year" value="${esc(it.year)}" /></label>
+					<label class="text-xs text-muted">标题<input class="field mt-1" data-k="title" value="${esc(it.title)}" /></label>
+					<label class="text-xs text-muted">机构<input class="field mt-1" data-k="company" value="${esc(it.company)}" /></label>
+					<label class="text-xs text-muted sm:col-span-2">描述<textarea class="field mt-1" data-k="description" rows="3">${esc(it.description)}</textarea></label>
+					<label class="text-xs text-muted">排序<input class="field mt-1" data-k="sort" type="number" value="${it.sort}" /></label>
+				</div>
+			</article>`,
+			)
+			.join('');
+	}
+
+	listEl.addEventListener('input', (e) => {
+		const t = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+		const card = t.closest('article') as HTMLElement;
+		const i = Number(card.dataset.i);
+		const k = t.dataset.k as keyof Item;
+		if (k === 'sort') items[i].sort = Number(t.value);
+		else if (k) (items[i] as any)[k] = t.value;
+	});
+
+	listEl.addEventListener('click', (e) => {
+		const t = e.target as HTMLElement;
+		if (!t.matches('[data-del]')) return;
+		items.splice(Number((t.closest('article') as HTMLElement).dataset.i), 1);
+		render();
+	});
+
+	document.getElementById('add-item')!.addEventListener('click', () => {
+		items.push({
+			id: Math.random().toString(36).slice(2, 12),
+			category: '项目经历',
+			year: '',
+			title: '',
+			company: '',
+			description: '',
+			sort: items.length + 1,
+		});
+		render();
+	});
+
+	document.getElementById('save-timeline')!.addEventListener('click', async () => {
+		const status = document.getElementById('timeline-status')!;
+		status.textContent = '保存中…';
+		const res = await fetch('/api/admin/data?resource=timeline', {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(items),
+		});
+		status.textContent = res.ok ? '已保存' : '保存失败';
+	});
+
+	render();
+</script>

@@ -1,6 +1,24 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { site, aboutStory, skillCategories, timeline } from '../data/site';
+import { site as fallbackSite, aboutStory as fallbackAbout, skillCategories, timeline as fallbackTimeline } from '../data/site';
+import { readStore } from '../lib/cms/store';
+import { toAboutFromStore, toSiteFromStore, toTimelineFromStore } from '../lib/cms/public';
+
+let site = fallbackSite;
+let aboutStory = fallbackAbout;
+let timeline = [...fallbackTimeline];
+
+try {
+	const store = await readStore();
+	site = toSiteFromStore(store) as typeof fallbackSite;
+	aboutStory = toAboutFromStore(store);
+	const fromCms = toTimelineFromStore(store);
+	if (fromCms.length) timeline = fromCms;
+} catch (e) {
+	console.error('CMS read failed, using fallback about data', e);
+}
 
 const timelineGroups = [
 	{ title: '实习经历', items: timeline.filter((item) => item.category === '实习经历') },
