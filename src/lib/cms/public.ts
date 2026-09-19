@@ -1,3 +1,4 @@
+import { site as staticSite } from '../../data/site';
 import type { CmsStore } from './types';
 
 /** Map CMS store into shapes the public site already expects. */
@@ -5,11 +6,13 @@ export function toSiteFromStore(store: CmsStore) {
 	const p = store.profile;
 	return {
 		name: p.name,
+		englishName: staticSite.englishName,
+		sloganLines: staticSite.sloganLines,
 		title: p.title,
 		tagline: p.tagline,
 		description: p.description,
-		url: 'https://wangyue-dewy.vercel.app',
-		locale: 'zh-CN' as const,
+		url: staticSite.url,
+		locale: staticSite.locale,
 		avatar: p.avatar,
 		email: p.email,
 		phone: p.phone,

@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getUi, type Locale } from '../../i18n';
+import { loadLocalizedContent } from '../../i18n/loadContent';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getUi(locale);
+const { site, timeline, skillCategories } = await loadLocalizedContent(locale);
+
+const timelineGroups = [
+	{
+		title: t.about.catWork,
+		items: timeline.filter(
+			(item) => item.category === t.about.catWork || item.category === '工作经历' || item.category === 'Work',
+		),
+	},
+	{
+		title: t.about.catEducation,
+		items: timeline.filter(
+			(item) =>
+				item.category === t.about.catEducation ||
+				item.category === '教育经历' ||
+				item.category === 'Education',
+		),
+	},
+	{
+		title: t.about.catInternship,
+		items: timeline.filter(
+			(item) =>
+				item.category === t.about.catInternship ||
+				item.category === '实习经历' ||
+				item.category === 'Internships',
+		),
+	},
+	{
+		title: t.about.catProject,
+		items: timeline.filter(
+			(item) =>
+				item.category === t.about.catProject ||
+				item.category === '项目经历' ||
+				item.category === 'Projects',
+		),
+	},
+	{
+		title: t.about.catWorkshop,
+		items: timeline.filter(
+			(item) =>
+				item.category === t.about.catWorkshop ||
+				item.category === '工作坊 / 学术' ||
+				item.category === 'Workshops / Academic',
+		),
+	},
+].filter((group) => group.items.length > 0);
+---
+
+<BaseLayout title={t.about.title} description={t.about.description(site.name)} locale={locale} site={site}>
+	<section class="py-16 sm:py-24">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<p class="section-index reveal mb-5">{t.about.index}</p>
+			<h1 class="display-title reveal max-w-3xl text-4xl sm:text-6xl">
+				{t.about.headline}<br />{t.about.headlineLine2}
+			</h1>
+			<p class="reveal mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+				{t.about.pageIntro}
+			</p>
+		</div>
+	</section>
+
+	<section id="timeline" class="band-ink scroll-mt-20 py-20 sm:py-28">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<div class="reveal mb-12 sm:mb-16">
+				<p class="section-index mb-4">Timeline</p>
+				<h2 class="display-title text-3xl sm:text-5xl">{t.about.timeline}</h2>
+			</div>
+
+			<div class="space-y-14 sm:space-y-16">
+				{
+					timelineGroups.map((group) => (
+						<div class="reveal">
+							<h3 class="mb-5 text-sm font-semibold tracking-[0.14em] text-accent uppercase">
+								{group.title}
+							</h3>
+							<div class="flex flex-col gap-4">
+								{
+									group.items.map((item) => {
+										const isEducation = group.title === t.about.catEducation;
+										const heading = isEducation ? item.company : item.title;
+										const sub = isEducation ? item.title : item.company;
+										return (
+											<div class="card-on-ink rounded-[1.75rem] p-7 transition-transform duration-300 hover:-translate-y-1 sm:p-8">
+												<div class="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+													<div>
+														<h4 class="text-xl font-semibold tracking-tight">{heading}</h4>
+														<p class="mt-1 text-sm text-[var(--color-on-ink-muted)]">{sub}</p>
+													</div>
+													<p class="shrink-0 text-sm font-medium text-[var(--color-on-ink-muted)]">{item.year}</p>
+												</div>
+												<p class="mt-4 text-sm leading-relaxed text-[var(--color-on-ink-muted)]">{item.description}</p>
+											</div>
+										);
+									})
+								}
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="py-20 sm:py-28">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<div class="reveal mb-12 text-center sm:mb-16">
+				<p class="section-index mb-4">Capabilities</p>
+				<h2 class="display-title text-3xl sm:text-5xl">{t.about.skills}</h2>
+			</div>
+
+			<div class="grid gap-5 sm:grid-cols-3">
+				{
+					skillCategories.map((cat) => (
+						<div class="tile reveal tile-hover p-8">
+							<h3 class="text-xl font-semibold tracking-tight">{cat.title}</h3>
+							<ul class="mt-5 space-y-2.5">
+								{cat.items.map((item) => (
+									<li class="flex items-center gap-2.5 text-sm text-muted">
+										<span class="h-1 w-1 rounded-full bg-accent" />
+										{item}
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+</BaseLayout>

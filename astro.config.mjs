@@ -9,10 +9,20 @@ export default defineConfig({
 	site: 'https://wangyue-dewy.vercel.app',
 	adapter: vercel(),
 	integrations: [sitemap()],
+	i18n: {
+		locales: ['zh', 'en'],
+		defaultLocale: 'zh',
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
 	security: {
 		allowedDomains: [
 			{ hostname: 'localhost' },
 			{ hostname: '127.0.0.1' },
+			{ hostname: 'dewyue.com', protocol: 'https' },
+			{ hostname: 'www.dewyue.com', protocol: 'https' },
+			{ hostname: 'dewyue.wang', protocol: 'https' },
 			{ hostname: 'wangyue-dewy.vercel.app', protocol: 'https' },
 		],
 	},

@@ -1,14 +1,30 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
-import { site } from '../data/site';
+import { getPublicContent } from '../lib/cms/getPublicContent';
+import { enSite } from '../i18n/content/en';
+import {
+	getAlternatePath,
+	htmlLang,
+	ogLocale,
+	resolveLocale,
+	type Locale,
+} from '../i18n';
 
 interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	locale?: Locale;
+	site?: Record<string, any>;
 }
+
+const locale = resolveLocale(Astro.props.locale ?? Astro.currentLocale);
+
+const cms = locale === 'zh' ? await getPublicContent() : null;
+const site = (Astro.props.site || (locale === 'en' ? enSite : cms!.site)) as typeof enSite;
 
 const {
 	title = site.name,
@@ -18,10 +34,14 @@ const {
 
 const pageTitle = title === site.name ? title : `${title} · ${site.name}`;
 const canonicalURL = new URL(Astro.url.pathname, site.url);
+const alternateZh = new URL(getAlternatePath(Astro.url.pathname, 'zh'), site.url);
+const alternateEn = new URL(getAlternatePath(Astro.url.pathname, 'en'), site.url);
+
+Astro.response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
 ---
 
 <!doctype html>
-<html lang={site.locale}>
+<html lang={htmlLang(locale)}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,13 +52,16 @@ const canonicalURL = new URL(Astro.url.pathname, site.url);
 		<title>{pageTitle}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalURL} />
+		<link rel="alternate" hreflang="zh-CN" href={alternateZh} />
+		<link rel="alternate" hreflang="en" href={alternateEn} />
+		<link rel="alternate" hreflang="x-default" href={alternateZh} />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={image} />
-		<meta property="og:locale" content={site.locale} />
+		<meta property="og:locale" content={ogLocale(locale)} />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={pageTitle} />
@@ -52,6 +75,7 @@ const canonicalURL = new URL(Astro.url.pathname, site.url);
 			rel="stylesheet"
 		/>
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<ClientRouter />
 
 		<script is:inline>
 			(function () {
@@ -62,27 +86,56 @@ const canonicalURL = new URL(Astro.url.pathname, site.url);
 				}
 			})();
 		</script>
+		<script is:inline>
+			(function () {
+				var KEY = 'lang-switch-scroll';
+				function restore() {
+					try {
+						var raw = sessionStorage.getItem(KEY);
+						if (raw == null) return;
+						sessionStorage.removeItem(KEY);
+						var y = Number(raw);
+						if (!Number.isFinite(y)) return;
+						history.scrollRestoration = 'manual';
+						var html = document.documentElement;
+						var prev = html.style.scrollBehavior;
+						html.style.scrollBehavior = 'auto';
+						window.scrollTo(0, y);
+						requestAnimationFrame(function () {
+							window.scrollTo(0, y);
+							html.style.scrollBehavior = prev;
+						});
+					} catch (_) {}
+				}
+				document.addEventListener('astro:after-swap', restore);
+				document.addEventListener('DOMContentLoaded', restore);
+			})();
+		</script>
 	</head>
 	<body class="flex min-h-screen flex-col">
-		<Header />
-		<main class="flex-1">
+		<Header site={site} locale={locale} />
+		<main class="flex-1" transition:animate="fade">
 			<slot />
 		</main>
-		<Footer />
+		<Footer site={site} locale={locale} />
 
 		<script>
-			const observer = new IntersectionObserver(
-				(entries) => {
-					for (const entry of entries) {
-						if (entry.isIntersecting) {
-							entry.target.classList.add('is-visible');
-							observer.unobserve(entry.target);
+			function initReveal() {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						for (const entry of entries) {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-visible');
+								observer.unobserve(entry.target);
+							}
 						}
-					}
-				},
-				{ threshold: 0.12 },
-			);
-			document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+					},
+					{ threshold: 0.12 },
+				);
+				document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => observer.observe(el));
+			}
+
+			document.addEventListener('astro:page-load', initReveal);
 		</script>
 	</body>
 </html>

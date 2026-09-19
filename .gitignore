@@ -31,3 +31,4 @@ data/*.db-*
 
 # large local portfolio pdf
 public/portfolio/*.pdf
+.env*

@@ -7,10 +7,10 @@ export function createSeedStore(): CmsStore {
 		cinemaHabit: '我很注重观影体验——能进影院就进影院，尤其喜欢 IMAX。',
 		profile: {
 			name: '王悦',
-			title: '全栈开发者 · 产品设计师',
-			tagline: '用代码与设计，构建有温度的数字体验',
+			title: 'FDE · AI Native 设计工程',
+			tagline: '用设计与工程把业务问题做成可上线的产品——既关心体验是否说得通，也关心它能不能稳定交付。',
 			description:
-				'王悦的个人网站 — 全栈开发、产品设计、技术写作。专注于 Web 应用、设计系统与开源项目。',
+				'王悦的个人网站 — Forward Deployed Engineer，设计系统与 AI Native 交付。驻场式把洞察落地为 Web、小程序与运营后台。',
 			email: 'iKevinAyuso@163.com',
 			phone: '13787007885',
 			location: '上海，中国',
@@ -22,11 +22,11 @@ export function createSeedStore(): CmsStore {
 			douyin: 'https://v.douyin.com/2y9Lx_T78Hc/',
 			linkedin: 'https://linkedin.com/in/example',
 			aboutIntro:
-				'你好，我是王悦（Dewy）。我是一名全栈开发者与产品设计师，习惯同时用代码和设计语言想问题——既关心系统怎么跑通，也关心体验落在人身上的触感。',
+				'你好，我是王悦（Dewy）。我是一名 Forward Deployed Engineer，习惯同时用设计与工程把业务问题做成可上线的产品——既关心体验是否说得通，也关心它能不能稳定交付。',
 			aboutParagraphs: [
-				'最近一段经历横跨 AI 产品与设计实践：在小红书做方言语料与策略优化，在字节跳动参与即梦视频大模型的 Prompt Engineering；也主导过广汽未来概念车的场景研究与方案表达，并独立完成商业委托书籍《书斋与人间》的全案设计。',
-				'我在中南大学参与国际设计工作坊与 AI Coding 黑客松，也持续用 Cursor、Figma、Rhino 等工具把想法快速做成可感知的原型。对我来说，工程是落地的路径，设计是判断的标准。',
-				'工作之外，我潜水、攀岩、跳街舞、弹吉他，也爱电影、咖啡、桌游和即兴喜剧。认真玩，同样训练我对节奏、细节和临场的敏感。如果你想交流项目或合作，欢迎联系我。',
+				'目前在某科技咨询公司以 FDE 驻场交付，并用交互 + 前端能力服务教育科技业务：覆盖多品牌设计系统、家长端 H5/小程序转化体验、员工端 Soft Ops 经营后台；同时用 Cursor 把设计语言与验收标准沉淀为可复用 Agent Skills。',
+				'此前经历横跨 AI 产品与设计实践：在小红书做方言语料与策略优化，在字节跳动参与即梦视频大模型的 Prompt Engineering；也主导过广汽未来概念车的场景研究，并独立完成商业委托书籍《书斋与人间》的全案设计。',
+				'工作之外，我潜水、攀岩、练 Popping / Waacking、弹吉他，也爱电影、咖啡、桌游和即兴喜剧。认真玩，同样训练我对节奏、细节和临场的敏感。如果你想交流项目或合作，欢迎联系我。',
 			],
 		},
 		movies: [
@@ -92,14 +92,14 @@ export function createSeedStore(): CmsStore {
 			},
 		],
 		skills: [
-			{ id: nanoid(10), name: 'TypeScript', level: 90, sort: 1 },
-			{ id: nanoid(10), name: 'React / Vue', level: 85, sort: 2 },
-			{ id: nanoid(10), name: 'Node.js', level: 80, sort: 3 },
-			{ id: nanoid(10), name: 'Astro', level: 85, sort: 4 },
-			{ id: nanoid(10), name: 'Tailwind CSS', level: 90, sort: 5 },
-			{ id: nanoid(10), name: 'Figma', level: 75, sort: 6 },
-			{ id: nanoid(10), name: 'PostgreSQL', level: 70, sort: 7 },
-			{ id: nanoid(10), name: 'Docker', level: 65, sort: 8 },
+			{ id: nanoid(10), name: 'Figma 设计系统', level: 92, sort: 1 },
+			{ id: nanoid(10), name: 'Cursor / AI Coding', level: 90, sort: 2 },
+			{ id: nanoid(10), name: 'Soft Ops / 后台 UX', level: 88, sort: 3 },
+			{ id: nanoid(10), name: 'H5 / 小程序', level: 85, sort: 4 },
+			{ id: nanoid(10), name: '品牌与 IP', level: 88, sort: 5 },
+			{ id: nanoid(10), name: 'CloudBase 部署', level: 80, sort: 6 },
+			{ id: nanoid(10), name: 'Prompt Engineering', level: 90, sort: 7 },
+			{ id: nanoid(10), name: '审美 Eval', level: 85, sort: 8 },
 		],
 		projects: [
 			{
@@ -155,13 +155,42 @@ export function createSeedStore(): CmsStore {
 		timeline: [
 			{
 				id: nanoid(10),
+				category: '工作经历',
+				year: '2026.6 — 至今',
+				title: 'Forward Deployed Engineer',
+				company: '某科技咨询公司',
+				description:
+					'以驻场 FDE 方式嵌入客户业务：把模糊需求拆成可验收范围，推进到可上线交付。建立「先本地预览、确认后再上线」的发布纪律；用 Cursor 将设计语言、验收口径与重复交付步骤沉淀为可复用 Agent Skills，形成 AI Native 交付工作流，提升同类需求的交付速度与稳定性。',
+				sort: 1,
+			},
+			{
+				id: nanoid(10),
+				category: '工作经历',
+				year: '2026.6 — 至今',
+				title: '交互设计 · 前端',
+				company: '某教育科技公司',
+				description:
+					'负责多品牌设计系统与产品界面一致性（宣传物料 / IP / 签约相关界面）；设计并落地家长端 H5 / 小程序转化链路的信息架构与关键节点体验；梳理员工端 Soft Ops 经营看板的信息层级与强调样式，并完成相关前端界面交付，推动方案进入真实使用。',
+				sort: 2,
+			},
+			{
+				id: nanoid(10),
+				category: '教育经历',
+				year: '2027 应届',
+				title: '本科',
+				company: '中南大学',
+				description: '产品设计专业，2023 级。主修课程：设计心理学、智能交互设计、设计程序与方法、用户研究、产品形态设计、服务设计等。',
+				sort: 3,
+			},
+			{
+				id: nanoid(10),
 				category: '实习经历',
 				year: '2025.8',
 				title: 'AI 语料训练实习生',
 				company: '小红书',
 				description:
 					'参与小红书方言 AI 项目，负责沪语方言区的语料标注与策略优化。结合实际使用场景，识别并提炼方言用户的表达习惯与深层偏好，为模型训练提供关键的用户洞察，推动语音交互体验更贴近真实沟通。',
-				sort: 1,
+				sort: 4,
 			},
 			{
 				id: nanoid(10),
@@ -171,7 +200,7 @@ export function createSeedStore(): CmsStore {
 				company: '字节跳动',
 				description:
 					'深度参与即梦 AI 视频大模型（Seedance 4.0）的训练与迭代。从产品审美与用户体验出发，系统性构建 Prompt Engineering 策略，对运镜、光影、材质、叙事逻辑等多模态维度精细化调校，将抽象设计审美转化为模型可理解的指令。',
-				sort: 2,
+				sort: 5,
 			},
 			{
 				id: nanoid(10),
@@ -181,7 +210,7 @@ export function createSeedStore(): CmsStore {
 				company: '广汽集团「从未来到未来」',
 				description:
 					'在广汽未来概念车项目中主导场景与用户研究，洞察未来城市出行中的情感触点，将社会趋势转化为设计语言与功能定义，并完成概念方案全流程表达。成果获 GAC 与 OPSH 导师认可，晋级全国七强。',
-				sort: 3,
+				sort: 6,
 			},
 			{
 				id: nanoid(10),
@@ -191,7 +220,7 @@ export function createSeedStore(): CmsStore {
 				company: '书籍《书斋与人间》',
 				description:
 					'受老年照料公司委托，为长者设计个人回忆录。独立完成从前期访谈、素材梳理到书籍结构、版式系统及封面工艺的全案设计。以「有温度的叙事」为理念，通过适老化视觉系统与克制的质感表达，将个体记忆转化为有尊严的设计成品。',
-				sort: 4,
+				sort: 7,
 			},
 			{
 				id: nanoid(10),
@@ -201,7 +230,7 @@ export function createSeedStore(): CmsStore {
 				company: '中南大学 × 千叶大学',
 				description:
 					'参与由日本千叶大学渡边诚教授主导的国际联合设计工作坊，畅想未来四十年后的家居，与跨学科团队合作，围绕未来智慧生活场景，完成从概念构想到手作建筑模型的全流程设计。',
-				sort: 5,
+				sort: 8,
 			},
 			{
 				id: nanoid(10),
@@ -211,7 +240,7 @@ export function createSeedStore(): CmsStore {
 				company: '湖南大学',
 				description:
 					'参与由巴西设计政策专家 Gisele Raulik Murphy 博士主持的「推动金砖国家可持续发展的实用工具设计」学术工作坊，系统研讨「为设计的政策、通过设计的政策、设计中的政策」三层次框架。',
-				sort: 6,
+				sort: 9,
 			},
 			{
 				id: nanoid(10),
@@ -221,7 +250,7 @@ export function createSeedStore(): CmsStore {
 				company: '中南大学',
 				description:
 					'首次个人参与校园 Vibe Coding 黑客松，借助 AI 驱动的自然语言编程工具，在极限时间内完成交互原型的快速开发。',
-				sort: 7,
+				sort: 10,
 			},
 		],
 	};

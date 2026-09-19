@@ -7,7 +7,7 @@ import { listTimeline } from '../../lib/cms/store';
 const timeline = await listTimeline();
 ---
 
-<AdminLayout title="经历管理" description="关于页时间线：实习 / 项目 / 工作坊。">
+<AdminLayout title="经历管理" description="关于页时间线：工作 / 教育 / 实习 / 项目 / 工作坊。">
 	<div class="mb-4 flex justify-end">
 		<button id="add-item" type="button" class="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white"
 			>+ 添加经历</button
@@ -60,6 +60,8 @@ const timeline = await listTimeline();
 				<div class="grid gap-3 sm:grid-cols-2">
 					<label class="text-xs text-muted">分类
 						<select class="field mt-1" data-k="category">
+							<option ${it.category === '工作经历' ? 'selected' : ''}>工作经历</option>
+							<option ${it.category === '教育经历' ? 'selected' : ''}>教育经历</option>
 							<option ${it.category === '实习经历' ? 'selected' : ''}>实习经历</option>
 							<option ${it.category === '项目经历' ? 'selected' : ''}>项目经历</option>
 							<option ${it.category === '工作坊 / 学术' ? 'selected' : ''}>工作坊 / 学术</option>

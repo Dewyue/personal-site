@@ -1,24 +1,42 @@
 ---
-import { site, nav } from '../../data/site';
+import { site as fallbackSite } from '../../data/site';
+import { enSite } from '../../i18n/content/en';
+import {
+	getUi,
+	localizePath,
+	navItems,
+	resolveLocale,
+	type Locale,
+} from '../../i18n';
 
+interface Props {
+	site?: typeof fallbackSite | typeof enSite | Record<string, any>;
+	locale?: Locale;
+}
+
+const locale = resolveLocale(Astro.props.locale ?? Astro.currentLocale);
+const t = getUi(locale);
+const site = (Astro.props.site || (locale === 'en' ? enSite : fallbackSite)) as typeof fallbackSite;
+const items = navItems(locale);
 const year = new Date().getFullYear();
+const contactHref = localizePath(locale, '/contact');
+const displayName = locale === 'en' ? site.englishName || site.name : site.name;
 
 const socials = [
 	{ label: 'GitHub', href: site.social.github },
 	{ label: 'Instagram', href: site.social.instagram },
-	{ label: '小红书', href: site.social.xiaohongshu },
-	{ label: '抖音', href: site.social.douyin },
+	{ label: t.footer.xiaohongshu, href: site.social.xiaohongshu },
+	{ label: t.footer.douyin, href: site.social.douyin },
 	{ label: 'LinkedIn', href: site.social.linkedin },
 ] as const;
 ---
 
 <footer class="band-ink">
 	<div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-		<!-- 大字号邀约 -->
 		<div class="mb-16">
 			<p class="section-index mb-5">Contact</p>
-			<a href="/contact" class="display-title group inline-block text-4xl sm:text-6xl lg:text-7xl">
-				来聊聊吧
+			<a href={contactHref} class="display-title group inline-block text-4xl sm:text-6xl lg:text-7xl">
+				{t.footer.letsTalk}
 				<span class="ml-1 inline-block text-accent transition-transform duration-300 group-hover:translate-x-2">→</span>
 			</a>
 			<p class="mt-6 max-w-md text-[15px] leading-relaxed text-[var(--color-on-ink-muted)]">
@@ -28,10 +46,10 @@ const socials = [
 
 		<div class="grid gap-10 pt-4 sm:grid-cols-3 sm:items-stretch">
 			<div>
-				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">导航</p>
+				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">{t.footer.nav}</p>
 				<ul class="mt-4 space-y-2.5">
 					{
-						nav.map((item) => (
+						items.map((item) => (
 							<li>
 								<a href={item.href} class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]">
 									{item.label}
@@ -43,7 +61,7 @@ const socials = [
 			</div>
 
 			<div>
-				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">社交</p>
+				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">{t.footer.social}</p>
 				<ul class="mt-4 space-y-2.5">
 					{
 						socials.map((s) => (
@@ -63,7 +81,7 @@ const socials = [
 			</div>
 
 			<div class="flex h-full flex-col">
-				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">信息</p>
+				<p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-on-ink-muted)]">{t.footer.info}</p>
 				<ul class="mt-4 space-y-2.5">
 					<li>
 						<a href={`mailto:${site.email}`} class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]">
@@ -71,7 +89,7 @@ const socials = [
 						</a>
 					</li>
 					<li>
-						<span class="text-sm text-[var(--color-on-ink-muted)]">微信：{site.social.wechat}</span>
+						<span class="text-sm text-[var(--color-on-ink-muted)]">{t.footer.wechat}：{site.social.wechat}</span>
 					</li>
 					<li><span class="text-sm text-[var(--color-on-ink-muted)]">{site.location}</span></li>
 				</ul>
@@ -84,8 +102,8 @@ const socials = [
 		</div>
 
 		<div class="mt-16 flex flex-col items-start justify-between gap-3 border-t border-[var(--color-on-ink-muted)]/20 pt-8 sm:flex-row sm:items-center">
-			<p class="text-xs text-[var(--color-on-ink-muted)]">© {year} {site.name}. 保留所有权利。</p>
-			<p class="text-xs text-[var(--color-on-ink-muted)]">Designed & built with care.</p>
+			<p class="text-xs text-[var(--color-on-ink-muted)]">© {year} {displayName}. {t.footer.rights}</p>
+			<p class="text-xs text-[var(--color-on-ink-muted)]">{t.footer.built}</p>
 		</div>
 	</div>
 </footer>

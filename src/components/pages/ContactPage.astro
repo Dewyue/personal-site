@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getUi, type Locale } from '../../i18n';
+import { loadLocalizedContent } from '../../i18n/loadContent';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getUi(locale);
+const { site, contactInfo } = await loadLocalizedContent(locale);
+
+const channels = [
+	{
+		title: t.contact.email,
+		value: site.email,
+		href: `mailto:${site.email}`,
+		note: contactInfo.responseTime,
+	},
+	{
+		title: 'GitHub',
+		value: 'github.com/Dewyue',
+		href: site.social.github,
+		note: t.contact.githubNote,
+	},
+	{
+		title: t.footer.xiaohongshu,
+		value: t.contact.xhsValue,
+		href: site.social.xiaohongshu,
+		note: t.contact.xhsNote,
+	},
+	{
+		title: t.footer.douyin,
+		value: t.contact.douyinValue,
+		href: site.social.douyin,
+		note: t.contact.douyinNote,
+	},
+	{
+		title: 'Instagram',
+		value: '@dewy_justdoit',
+		href: site.social.instagram,
+		note: t.contact.igNote,
+	},
+	{
+		title: 'LinkedIn',
+		value: t.contact.linkedinValue,
+		href: site.social.linkedin,
+		note: t.contact.linkedinNote,
+	},
+] as const;
+
+const locationLine =
+	locale === 'en'
+		? `Currently based in ${site.location}`
+		: `目前工作、生活在${site.location}`;
+const wechatNote = locale === 'en' ? 'Quick chat' : '即时交流';
+---
+
+<BaseLayout
+	title={t.contact.title}
+	description={t.contact.description(site.name, contactInfo.intro)}
+	locale={locale}
+	site={site}
+>
+	<section class="py-16 sm:py-24">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<p class="section-index reveal mb-5">Contact</p>
+			<h1 class="display-title reveal text-4xl sm:text-6xl lg:text-7xl">
+				{t.contact.headline}<br />{t.contact.headlineLine2}
+			</h1>
+			<p class="reveal mt-8 max-w-xl text-lg text-muted">{contactInfo.intro}</p>
+			<p class="reveal mt-3 text-sm font-semibold text-accent">{contactInfo.availability}</p>
+		</div>
+	</section>
+
+	<section class="band-ink py-20 sm:py-28">
+		<div class="mx-auto max-w-6xl px-4 sm:px-6">
+			<div class="grid auto-rows-fr gap-5 sm:grid-cols-2">
+				{
+					channels.map((ch) => (
+						<a
+							href={ch.href}
+							target={ch.href.startsWith('mailto') ? undefined : '_blank'}
+							rel={ch.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+							class="card-on-ink group flex h-full min-w-0 flex-col rounded-[1.75rem] p-8 transition-all duration-300 hover:-translate-y-1"
+						>
+							<div class="flex items-start justify-between gap-4">
+								<h2 class="text-xl font-semibold tracking-tight group-hover:text-accent sm:text-2xl">
+									{ch.title}
+								</h2>
+								<span class="text-lg text-accent transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5">
+									↗
+								</span>
+							</div>
+							<p class="mt-2 text-sm text-[var(--color-on-ink-muted)]">{ch.note}</p>
+							<p class="mt-auto pt-6 text-sm font-medium text-accent">{ch.value}</p>
+						</a>
+					))
+				}
+
+				<div class="card-on-ink flex h-full min-w-0 flex-col rounded-[1.75rem] p-8">
+					<h2 class="text-xl font-semibold tracking-tight sm:text-2xl">{t.contact.wechatTitle}</h2>
+					<p class="mt-2 text-sm text-[var(--color-on-ink-muted)]">{wechatNote}</p>
+					<p class="mt-auto pt-6 text-sm font-medium text-accent">{site.social.wechat}</p>
+				</div>
+
+				<div class="card-on-ink flex h-full min-w-0 flex-col rounded-[1.75rem] p-8">
+					<div class="flex items-start justify-between gap-4">
+						<div class="min-w-0">
+							<h2 class="text-xl font-semibold tracking-tight sm:text-2xl">{t.contact.qrTitle}</h2>
+							<p class="mt-2 text-sm text-[var(--color-on-ink-muted)]">{t.contact.qrNote}</p>
+						</div>
+						<div class="shrink-0 overflow-hidden rounded-xl bg-white p-1.5">
+							<img
+								src="/qr-plain.png"
+								alt={t.contact.qrAlt}
+								width="72"
+								height="72"
+								class="size-[4.5rem]"
+							/>
+						</div>
+					</div>
+					<a
+						href="/qr-card-light.png"
+						download="dewy-qr.png"
+						class="link-blue mt-auto pt-6 text-sm font-medium"
+					>
+						{t.contact.qrDownload} →
+					</a>
+				</div>
+			</div>
+
+			<p class="reveal mt-12 text-center text-sm text-[var(--color-on-ink-muted)]">
+				{locationLine}
+			</p>
+		</div>
+	</section>
+</BaseLayout>
