@@ -1,9 +1,17 @@
 /** 作品集页面来自《王悦-作品集2026.pdf》，已转为站内图片内嵌展示 */
 
+const sourcePageCount = 31;
+/** 简历内页不在站内作品集展示 */
+const omittedSourcePages = [3];
+
+export const portfolioPages = Array.from({ length: sourcePageCount }, (_, i) => i + 1).filter(
+	(n) => !omittedSourcePages.includes(n),
+);
+
 export const portfolioMeta = {
 	title: 'Dewy’s Portfolio 2026',
 	subtitle: '王悦 · 作品集',
-	totalPages: 31,
+	totalPages: portfolioPages.length,
 	pagePath: (n: number) => `/portfolio/page-${String(n).padStart(2, '0')}.jpg`,
 } as const;
 

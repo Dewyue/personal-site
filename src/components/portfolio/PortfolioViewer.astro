@@ -1,5 +1,5 @@
 ---
-import { portfolioMeta, portfolioProjects as zhProjects } from '../../data/portfolio';
+import { portfolioMeta, portfolioPages, portfolioProjects as zhProjects } from '../../data/portfolio';
 import { enProjects } from '../../i18n/content/en';
 import { getUi, resolveLocale, type Locale } from '../../i18n';
 
@@ -16,7 +16,11 @@ const { initialPage = 1, class: className, variant = 'standalone' } = Astro.prop
 const locale = resolveLocale(Astro.props.locale ?? Astro.currentLocale);
 const t = getUi(locale).projects;
 const projects = locale === 'en' ? enProjects : [...zhProjects];
-const pages = Array.from({ length: portfolioMeta.totalPages }, (_, i) => i + 1);
+const pages = [...portfolioPages];
+const resolvedInitial = pages.includes(initialPage)
+	? initialPage
+	: pages.reduce((best, n) => (Math.abs(n - initialPage) < Math.abs(best - initialPage) ? n : best), pages[0]);
+const initialDisplay = pages.indexOf(resolvedInitial) + 1;
 const projectsJson = JSON.stringify(
 	projects.map((p) => ({
 		number: p.number,
@@ -36,7 +40,8 @@ const embedded = variant === 'embedded';
 		className,
 	]}
 	data-total={portfolioMeta.totalPages}
-	data-initial={initialPage}
+	data-initial={resolvedInitial}
+	data-page-list={JSON.stringify(pages)}
 	data-fallback-caption={t.fallbackCaption}
 	data-projects={projectsJson}
 >
@@ -100,13 +105,13 @@ const embedded = variant === 'embedded';
 					pages.map((n) => (
 						<img
 							src={portfolioMeta.pagePath(n)}
-							alt={t.pageAlt(n)}
+							alt={t.pageAlt(pages.indexOf(n) + 1)}
 							class:list={[
 								'portfolio-page absolute inset-0 h-full w-full object-contain',
-								n === initialPage ? 'is-active' : '',
+								n === resolvedInitial ? 'is-active' : '',
 							]}
 							data-page={n}
-							loading={n <= 2 ? 'eager' : 'lazy'}
+							loading={n <= 4 ? 'eager' : 'lazy'}
 							decoding="async"
 						/>
 					))
@@ -150,7 +155,7 @@ const embedded = variant === 'embedded';
 							embedded ? 'text-foreground' : 'text-[var(--color-on-ink)]',
 						]}
 					>
-						{initialPage}
+						{initialDisplay}
 					</span>
 					<span class="mx-1">/</span>
 					<span>{portfolioMeta.totalPages}</span>
@@ -194,11 +199,11 @@ const embedded = variant === 'embedded';
 						type="button"
 						class:list={[
 							'portfolio-thumb shrink-0 overflow-hidden rounded-md ring-2 transition',
-							n === initialPage ? 'ring-accent' : 'ring-transparent opacity-50 hover:opacity-100',
+							n === resolvedInitial ? 'ring-accent' : 'ring-transparent opacity-50 hover:opacity-100',
 						]}
 						data-page={n}
-						aria-label={t.pageAria(n)}
-						aria-current={n === initialPage ? 'true' : undefined}
+						aria-label={t.pageAria(pages.indexOf(n) + 1)}
+						aria-current={n === resolvedInitial ? 'true' : undefined}
 					>
 						<img
 							src={portfolioMeta.pagePath(n)}
@@ -224,14 +229,39 @@ const embedded = variant === 'embedded';
 	type ProjectMeta = { number: string; title: string; startPage: number; endPage: number };
 
 	function initPortfolioViewer(root: HTMLElement) {
-		const total = Number(root.dataset.total || 31);
-		let current = Number(root.dataset.initial || 1);
+		let pageList: number[] = [];
+		try {
+			pageList = JSON.parse(root.dataset.pageList || '[]') as number[];
+		} catch {
+			pageList = [];
+		}
+		if (!pageList.length) {
+			const total = Number(root.dataset.total || 30);
+			pageList = Array.from({ length: total }, (_, i) => i + 1);
+		}
+		let current = Number(root.dataset.initial || pageList[0] || 1);
 		const fallbackCaption = root.dataset.fallbackCaption || 'Portfolio';
 		let projects: ProjectMeta[] = [];
 		try {
 			projects = JSON.parse(root.dataset.projects || '[]') as ProjectMeta[];
 		} catch {
 			projects = [];
+		}
+
+		function nearestPage(page: number) {
+			if (pageList.includes(page)) return page;
+			return pageList.reduce((best, n) => (Math.abs(n - page) < Math.abs(best - page) ? n : best), pageList[0]);
+		}
+
+		function displayOf(page: number) {
+			const i = pageList.indexOf(page);
+			return i >= 0 ? i + 1 : 1;
+		}
+
+		function step(delta: number) {
+			const i = pageList.indexOf(current);
+			const next = pageList[i + delta];
+			if (next != null) go(next);
 		}
 
 		const pages = root.querySelectorAll<HTMLImageElement>('.portfolio-page');
@@ -256,7 +286,7 @@ const embedded = variant === 'embedded';
 
 		function go(page: number, opts: { syncThumb?: boolean } = {}) {
 			const { syncThumb = true } = opts;
-			current = Math.max(1, Math.min(total, page));
+			current = nearestPage(page);
 			pages.forEach((img) => {
 				img.classList.toggle('is-active', Number(img.dataset.page) === current);
 			});
@@ -278,13 +308,13 @@ const embedded = variant === 'embedded';
 				btn.classList.toggle('ring-accent', active);
 				btn.setAttribute('aria-current', active ? 'true' : 'false');
 			});
-			if (currentEl) currentEl.textContent = String(current);
+			if (currentEl) currentEl.textContent = String(displayOf(current));
 			if (captionEl) captionEl.textContent = captionFor(current);
 			root.dataset.initial = String(current);
 		}
 
-		prevBtns.forEach((btn) => btn.addEventListener('click', () => go(current - 1)));
-		nextBtns.forEach((btn) => btn.addEventListener('click', () => go(current + 1)));
+		prevBtns.forEach((btn) => btn.addEventListener('click', () => step(-1)));
+		nextBtns.forEach((btn) => btn.addEventListener('click', () => step(1)));
 		thumbs.forEach((thumb) =>
 			thumb.addEventListener('click', () => go(Number(thumb.dataset.page))),
 		);
@@ -306,11 +336,11 @@ const embedded = variant === 'embedded';
 			if (!inView) return;
 			if (e.key === 'ArrowLeft') {
 				e.preventDefault();
-				go(current - 1);
+				step(-1);
 			}
 			if (e.key === 'ArrowRight') {
 				e.preventDefault();
-				go(current + 1);
+				step(1);
 			}
 		};
 		window.addEventListener('keydown', onKey);
@@ -330,8 +360,8 @@ const embedded = variant === 'embedded';
 				const endX = e.changedTouches[0]?.clientX ?? 0;
 				const dx = endX - startX;
 				if (Math.abs(dx) < 50) return;
-				if (dx < 0) go(current + 1);
-				else go(current - 1);
+				if (dx < 0) step(1);
+				else step(-1);
 			},
 			{ passive: true },
 		);
