@@ -1,43 +1,331 @@
-# Astro Starter Kit: Minimal
+**中文** · [English](./README.en.md)
+
+# 王悦 / Dewy
+
+Forward Deployed Engineer 的个人主页。用设计与工程把业务问题做成可上线的产品：设计系统、家长端 H5 / 小程序、员工端 Soft Ops，以及 AI Native 交付。
+
+线上地址：[wangyue-dewy.vercel.app](https://wangyue-dewy.vercel.app)
+
+站点是中英双语。中文在根路径（`/`），英文在 `/en`。导航里的「中 / EN」会切到同一页的另一种语言，并尽量留在原来的滚动位置。
+
+---
+
+## 全站共用
+
+每一页都套同一套顶栏和页脚。
+
+### 导航栏
+
+顶栏吸顶，半透明磨砂。从左到右：
+
+| 位置 | 内容 | 作用 |
+| --- | --- | --- |
+| 品牌名 | 中文站显示「王悦」，英文站显示「Dewy」 | 回到当前语言的首页 |
+| 主导航 | 首页、经历、作品、兴趣、联系 | 桌面端横排；当前页加粗。进入子页（例如电影）时，父级「兴趣」仍保持选中 |
+| 「联系我」 | 胶囊按钮 | 直达联系页。窄屏上藏进菜单，避免和语言、主题按钮挤在一起 |
+| 中 / EN | 分段切换 | 中文 ↔ 英文。已在当前语言时再点不会跳走 |
+| 主题 | 太阳 / 月亮 | 浅色与深色。选择写在本地，下次打开仍记得 |
+| 菜单 | 三条横线 | 仅小屏。展开后是同一组导航，并再给一次中文 / English |
+
+页脚在每页底部，深色底。
+
+- 小标题 **Contact**，大标题「来聊聊吧 →」，链到联系页，旁边是一句个人 tagline。
+- 三列：**导航**（五个主栏目）、**社交**（GitHub、Instagram、小红书、抖音、LinkedIn）、**信息**（邮箱、微信号 Dewyue、所在地上海）。
+- 信息列底部是口号 **Just do it / Just Dewy**。
+- 最下一行是版权年份与 “Designed & built with care.”
+
+---
+
+## 首页 `/`
+
+首屏是自我介绍，往下是经历摘要、能力、技能跑马灯，以及作品集入口。完整时间线不堆在首页，只留两条工作经历当证据。
+
+### 首屏
+
+- 小标题：**FDE · AI Native 设计工程**
+- 大标题：**你好，我是王悦。**
+- 教育胶囊：中南大学本科 · 2027 应届（来自经历数据里的教育条目）
+- 一段 tagline：设计与工程一起交付，既看体验是否说得通，也看能不能稳定上线
+- 两个行动：**走过的路**（去经历页）、**联系我 →**
+- 右侧圆形头像。小屏上头像在文案上方
+
+### Experience · 走过的路。
+
+小标题 **Experience**，大标题 **走过的路。** 右侧链接 **完整经历 →**，跳到经历页的时间线锚点。
+
+正文是三段自我介绍：
+
+1. 现在的 FDE 驻场，以及教育科技业务里的设计系统、家长端转化、Soft Ops，和用 Cursor 沉淀 Agent Skills
+2. 此前：小红书方言语料、字节即梦 Prompt Engineering、广汽概念车、商业委托书籍《书斋与人间》
+3. 工作之外的潜水、攀岩、Popping / Waacking、吉他、电影、咖啡、桌游、即兴喜剧
+
+下面两张深色卡片，只取**工作经历**里的前两条：
+
+- **Forward Deployed Engineer** · 某科技咨询公司 · 2026.6 — 至今
+- **交互设计 · 前端** · 某教育科技公司 · 2026.6 — 至今
+
+每张卡片有类别、职位、机构、年份和一段说明。
+
+### Capabilities · 能做什么。
+
+小标题 **Capabilities**，大标题 **能做什么。** 三列能力：
+
+**FDE 交付**
+
+- 驻场需求拆解
+- 设计 → 代码 → 上线
+- 运营后台 Soft Ops
+- H5 / 微信小程序
+- CloudBase / CDN 发布
+
+**设计系统与品牌**
+
+- 多品牌视觉体系
+- Figma Tokens / 组件
+- IP 与宣传物料
+- 转化链路视觉
+- 审美评测与迭代
+
+**AI Native 工作流**
+
+- Cursor Agent Skills
+- Spec / 验收标准
+- 可复用 PE 与 SOP
+- 日更协作工作日志
+- Prompt Engineering
+
+### 技能跑马灯
+
+深色横条无限滚动，读作「技能一览」。条目包括：Figma 设计系统、Cursor / AI Coding、Soft Ops / 后台 UX、H5 / 小程序、品牌与 IP、CloudBase 部署、Prompt Engineering、审美 Eval。
+
+### Portfolio · 设计作品集。
+
+小标题 **Portfolio**，大标题 **设计作品集。** 整块卡片可点，链到作品页；右上角是 **浏览作品集 →**。里面用前四个项目的封面排成一行预览：从未来到未来、保温杯结构设计、充电桩形态设计、Future Smart Home。
+
+---
+
+## 经历 `/about`
+
+导航名是「经历」。这一页放下首页没展开的完整路径，以及同一套能力地图。
+
+### 页头
+
+- 小标题：**Path**
+- 大标题：**走过的路，** / **和还能做什么。**
+- 导语：工作经历、实习与项目，以及可复用的能力地图
+
+### Timeline · 走过的路。
+
+小标题 **Timeline**，大标题 **走过的路。** 按类别分组，组内是深色卡片。教育条目把学校放在标题、学历放在副标题，其余条目是职位 / 项目名 + 机构。
+
+**工作经历**
+
+- Forward Deployed Engineer · 某科技咨询公司 · 2026.6 — 至今  
+  驻场把模糊需求拆成可验收范围；先本地预览再上线；用 Cursor 把设计语言、验收口径和重复步骤沉淀成 Agent Skills。
+- 交互设计 · 前端 · 某教育科技公司 · 2026.6 — 至今  
+  多品牌设计系统与界面一致性；家长端 H5 / 小程序转化链路；员工端 Soft Ops 经营看板的信息层级与前端交付。
+
+**教育经历**
+
+- 中南大学 · 本科 · 2027 应届  
+  产品设计，2023 级。设计心理学、智能交互设计、设计程序与方法、用户研究、产品形态设计、服务设计等。
+
+**实习经历**
+
+- AI 语料训练实习生 · 小红书 · 2025.8  
+  方言 AI 项目，沪语区语料标注与策略优化。
+- PE 工程师 · 字节跳动 · 2025.9 — 2025.12  
+  即梦 AI 视频大模型（Seedance 4.0）。从审美与体验出发做 Prompt Engineering，覆盖运镜、光影、材质、叙事。
+
+**项目经历**
+
+- 交通工具概念设计 · 广汽集团「从未来到未来」 · 2025.9 — 2025.10  
+  场景与用户研究，成果晋级全国七强。
+- 独立设计师（商业委托）· 书籍《书斋与人间》 · 2026.3 — 2026.4  
+  长者回忆录全案：访谈、结构、版式与封面工艺。
+
+**工作坊 / 学术**
+
+- 国际设计工作坊 · 未来智慧家居 · 中南大学 × 千叶大学 · 2025.10
+- 国际设计工作坊 · 设计政策构建 · 湖南大学 · 2025.11
+- TRAE AI Coding Hackathon · 中南大学 · 2026.4
+
+### Capabilities · 技能地图。
+
+小标题 **Capabilities**，大标题 **技能地图。** 三列内容与首页「能做什么」相同，这里作为经历页的收束，方便单独打开这一页的人直接看到能力范围。
+
+---
+
+## 作品 `/projects`
+
+站内翻阅设计作品集，不跳到外部 PDF。源文件是《王悦-作品集 2026》，转成页面图片后嵌在页面里。简历那一页不放进翻页器。
+
+### 页头与项目索引
+
+- 小标题：**Works · 4 Projects**
+- 大标题：**作品集。**
+- 导语：以下作品可在本页直接翻阅完整作品集，无需跳转外站
+
+四张封面卡，带编号、类别和标题。点击不会离开本页：页面滚到下方翻页器，并直接打开该项目的起始页。
+
+| 编号 | 标题 | 类别 | 翻页范围 |
+| --- | --- | --- | --- |
+| 01 | 从未来到未来 | 交通工具概念设计 | 广汽 HYPTEC TIDAL 台岛，面向粤港澳大湾区水上都市的潮汐动力概念载具 |
+| 02 | 保温杯结构设计 | 工业产品结构设计 | 爆炸结构、工程图纸、组件关系与材质 |
+| 03 | 充电桩形态设计 | 工业产品形态设计 | 充电场景里的形态语言与材质 |
+| 04 | Future Smart Home | 智慧家居 | 千叶大学工作坊：四十年后的居住，从概念到剖面与手作模型 |
+
+### 翻页器
+
+小标题 **Portfolio · 30 Pages**，大标题 **作品集。** 说明：点击上方卡片或框内标签跳转；键盘 ← → 翻页。
+
+翻页器本身包含：
+
+- **项目标签条**：01–04，点某一个就跳到该项目第一页；翻到该项目范围内时，对应标签高亮
+- **画面**：16:9 舞台，左右半透明箭头
+- **页码**：当前页 / 总页数，并在宽屏显示「编号 · 项目名」
+- **上一页 / 下一页**
+- **缩略图条**：点缩略图跳页，当前页有描边，并自动滚到可视区域中间
+- **键盘**：翻页器在视口内时，左右方向键翻页（光标在输入框里时不拦截）
+
+---
+
+## 兴趣 `/interests`
+
+工作之外的事，按五种状态分组。观影是唯一能点进去的子页。
+
+### 页头
+
+- 小标题：**Interests · 12**
+- 大标题：**工作之外，** / **这些事让我在场。**
+- 右侧导语：代码与设计之外，也在水下、岩壁、舞台与日常里找感觉
+
+下面一条深色跑马灯，循环滚动全部兴趣名称。
+
+### Move · 动起来
+
+小标题 **Move**，大标题 **动起来**，标注 **04 topics**。
+
+| | 名称 | 说明 |
+| --- | --- | --- |
+| 01 | 潜水 | 水肺潜水 / 自由潜。在水下把节奏放慢，练习呼吸与专注 |
+| 02 | 街舞 | Popping / Waacking / Afro。用身体找节拍，把即兴变成可控的表达 |
+| 03 | 攀岩 | 一条线路一种解题方式，手感比蛮力更重要 |
+| 04 | 旅行 | 换一座城市，重新校准对日常的敏感度 |
+
+潜水、旅行是宽卡片，街舞、攀岩是窄卡片。
+
+### Play · 开一局
+
+小标题 **Play**，大标题 **开一局**，**03 topics**。这一组用深色底，和上一组错开。
+
+| | 名称 | 说明 |
+| --- | --- | --- |
+| 01 | 桌游 | 规则里的社交，策略和笑声一样重要 |
+| 02 | 国际象棋 | 六十四格里把下一步算清，判断比输赢更上瘾 |
+| 03 | 台球 | 一条直线、一个角度，把耐心落到毫米 |
+
+### Laugh · 好好笑
+
+小标题 **Laugh**，大标题 **好好笑**，**02 topics**。
+
+| | 名称 | 说明 |
+| --- | --- | --- |
+| 01 | 看即兴喜剧 | 坐在台下看别人接招，意外比剧本更好笑 |
+| 02 | 听播客 | 听人聊社会议题，主播却嘻嘻哈哈，严肃里带笑 |
+
+### Think · 常思考
+
+小标题 **Think**，大标题 **常思考**，**02 topics**。深色底。
+
+| | 名称 | 说明 |
+| --- | --- | --- |
+| 01 | 观影 | 卡片右上角是「查看 →」，进入 `/interests/cinema` |
+| 02 | 阅读 | 文字是最轻便的远行，也是最安静的对话 |
+
+### Feel · 去感受
+
+小标题 **Feel**，大标题 **去感受**，**02 topics**。
+
+| | 名称 | 说明 |
+| --- | --- | --- |
+| 01 | 木吉他 | 指尖上的音色练习，慢也没关系 |
+| 02 | 咖啡 | 从豆子到杯子，喜欢可重复的小仪式 |
+
+### Together · 有共同爱好？
+
+页底一块浅色卡片。小标题 **Together**，大标题 **有共同爱好？** 正文：潜水局、桌游夜、即兴演出，或者只是喝杯咖啡聊聊都行。按钮 **来聊聊 →** 去联系页。
+
+### 电影 `/interests/cinema`
+
+从「观影」进入，不在主导航里单独占一项。
+
+- 返回链接：**← 兴趣**
+- 小标题：**Cinema**
+- 大标题：**电影**
+- 两段介绍：看电影是把故事、光影和情绪一次吃干净；能进影院就进影院，尤其喜欢 IMAX
+
+**Life Ranking · 人生电影**
+
+小标题 **Life Ranking**，大标题 **人生电影**。提示：点击海报前往 IMDb。六张海报，悬停略放大，下方是排名、中文名、英文名和年份。
+
+| 排名 | 电影 | 年份 |
+| --- | --- | --- |
+| 01 | 小马王 / Spirit: Stallion of the Cimarron | 2002 |
+| 02 | 加勒比海盗 3 / Pirates of the Caribbean: At World's End | 2007 |
+| 03 | 盗梦空间 / Inception | 2010 |
+| 04 | 肖申克的救赎 / The Shawshank Redemption | 1994 |
+| 05 | 好东西 / Her Story | 2024 |
+| 06 | 僵尸世界大战 / World War Z | 2013 |
+
+页底再给一次 **← 返回兴趣**。
+
+---
+
+## 联系 `/contact`
+
+- 小标题：**Contact**
+- 大标题：**有想法？** / **一起做点什么。**
+- 导语：有项目合作、技术交流或职业机会，欢迎联系
+- 状态：**目前开放远程兼职与咨询合作。**
+
+深色区是一组等高卡片，外链新开标签，邮箱用 `mailto`。
+
+| 卡片 | 展示 | 说明 |
+| --- | --- | --- |
+| 电子邮件 | iKevinAyuso@163.com | 通常 1–2 个工作日内回复 |
+| GitHub | github.com/Dewyue | 代码与开源贡献 |
+| 小红书 | 收获 6385 次赞与收藏 | 来看看我的主页 |
+| 抖音 | 查看更多作品 | 短视频与日常 |
+| Instagram | @dewy_justdoit | 日常与作品分享 |
+| LinkedIn | 职业社交 | 工作经历与推荐 |
+| 微信 | Dewyue | 即时交流，这一张不外跳 |
+| 扫码访问 | 站点二维码 | 手机扫一扫直达个人主页，并可下载二维码图片 |
+
+底部一行：**目前工作、生活在上海，中国。**
+
+---
+
+## 英文站
+
+英文是平行站点，不是机翻插件。路径前面加 `/en`：
+
+- `/en` 首页
+- `/en/about` Path
+- `/en/projects` Work
+- `/en/interests` Interests
+- `/en/interests/cinema` Cinema
+- `/en/contact` Contact
+
+导航文案对应为 Home / Path / Work / Interests / Contact。板块结构、项目分页、电影名单与中文站一致，标题和正文换成英文。品牌名显示 Dewy。切换语言时，电影子页会留在电影页，不会被送回兴趣列表。
+
+---
+
+## 本地运行
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+开发服务器默认在 `localhost:4321`。`npm run build` 产出静态站点到 `./dist/`。
