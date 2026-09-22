@@ -313,3 +313,7 @@ npm run dev
 ```
 
 Dev server: `localhost:4321`. `npm run build` writes the static site to `./dist/`.
+
+## Product document
+
+[PRD (Chinese)](./docs/个人主页-产品需求文档PRD.md): problem, scope, and acceptance from day one, then a full walkthrough of the shipped site.
