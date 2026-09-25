@@ -17,27 +17,32 @@ const homeBase = localizePath(locale, '/');
 <BaseLayout title={t.projects.title} description={t.projects.description} locale={locale}>
 	<section class="py-16 sm:py-24">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6">
-			<p class="section-index reveal mb-4">{t.projects.works} · {portfolioProjects.length} Projects</p>
+			<p class="section-index reveal mb-4">{t.projects.works}</p>
 			<h1 class="display-title reveal text-4xl sm:text-5xl">{t.projects.headline}</h1>
 			<p class="reveal mt-4 max-w-2xl text-base leading-relaxed text-muted">
 				{t.projects.intro}
 			</p>
 
-			<a
-				href={site.social.folio}
-				target="_blank"
-				rel="noopener noreferrer"
-				class="tile tile-hover reveal mt-8 flex items-end justify-between gap-4 p-6 sm:p-7"
-			>
-				<div>
-					<p class="section-index mb-2">Folio</p>
-					<h2 class="display-title text-2xl sm:text-3xl">{t.projects.folioTitle}</h2>
-					<p class="mt-2 max-w-md text-sm leading-relaxed text-muted">{t.projects.folioBody}</p>
-				</div>
-				<span class="link-blue shrink-0 text-sm font-semibold">{t.projects.folioCta}</span>
-			</a>
+			<div class="mt-10">
+				<p class="section-index reveal mb-3">{t.home.labsLabel}</p>
+				<a
+					href={site.social.folio}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="tile tile-hover reveal flex items-end justify-between gap-4 p-6 sm:p-7"
+				>
+					<div>
+						<h2 class="display-title text-2xl sm:text-3xl">{t.projects.labsTitle}</h2>
+						<p class="mt-2 max-w-md text-sm leading-relaxed text-muted">{t.projects.labsBody}</p>
+					</div>
+					<span class="link-blue shrink-0 text-sm font-semibold">{t.projects.labsCta}</span>
+				</a>
+			</div>
 
-			<div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+			<div class="mt-12">
+				<p class="section-index reveal mb-3">{t.home.deckLabel}</p>
+				<h2 class="display-title reveal mb-5 text-2xl sm:text-3xl">{t.projects.deckTitle}</h2>
+			<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 				{
 					portfolioProjects.map((project) => (
 						<a
@@ -60,6 +65,7 @@ const homeBase = localizePath(locale, '/');
 						</a>
 					))
 				}
+			</div>
 			</div>
 		</div>
 	</section>

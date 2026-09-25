@@ -51,12 +51,7 @@ const socials = [
 					{
 						items.map((item) => (
 							<li>
-								<a
-									href={item.href}
-									target={item.external ? '_blank' : undefined}
-									rel={item.external ? 'noopener noreferrer' : undefined}
-									class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]"
-								>
+								<a href={item.href} class="text-sm text-[var(--color-on-ink-muted)] transition-colors hover:text-[var(--color-on-ink)]">
 									{item.label}
 								</a>
 							</li>

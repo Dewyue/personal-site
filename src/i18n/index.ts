@@ -1,5 +1,4 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { site } from '../data/site';
 import type { Locale } from './ui';
 import { getUi } from './ui';
 
@@ -47,12 +46,11 @@ export function getAlternatePath(pathname: string, target: Locale): string {
 export function navItems(locale: Locale) {
 	const t = getUi(locale);
 	return [
-		{ label: t.nav.home, href: localizePath(locale, '/'), external: false },
-		{ label: t.nav.about, href: localizePath(locale, '/about'), external: false },
-		{ label: t.nav.projects, href: localizePath(locale, '/projects'), external: false },
-		{ label: t.nav.folio, href: site.social.folio, external: true },
-		{ label: t.nav.interests, href: localizePath(locale, '/interests'), external: false },
-		{ label: t.nav.contact, href: localizePath(locale, '/contact'), external: false },
+		{ label: t.nav.home, href: localizePath(locale, '/') },
+		{ label: t.nav.about, href: localizePath(locale, '/about') },
+		{ label: t.nav.projects, href: localizePath(locale, '/projects') },
+		{ label: t.nav.interests, href: localizePath(locale, '/interests') },
+		{ label: t.nav.contact, href: localizePath(locale, '/contact') },
 	] as const;
 }
 
