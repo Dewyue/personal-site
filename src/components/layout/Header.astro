@@ -38,12 +38,16 @@ const altEn = getAlternatePath(Astro.url.pathname, 'en');
 				items.map((item) => {
 					const itemPath = item.href.replace(/\/$/, '') || '/';
 					const isActive =
-						itemPath === homeHref || itemPath === '/'
-							? currentPath === itemPath
-							: currentPath === itemPath || currentPath.startsWith(`${itemPath}/`);
+						item.external
+							? false
+							: itemPath === homeHref || itemPath === '/'
+								? currentPath === itemPath
+								: currentPath === itemPath || currentPath.startsWith(`${itemPath}/`);
 					return (
 						<a
 							href={item.href}
+							target={item.external ? '_blank' : undefined}
+							rel={item.external ? 'noopener noreferrer' : undefined}
 							class:list={[
 								'text-sm transition-opacity',
 								isActive
@@ -157,6 +161,8 @@ const altEn = getAlternatePath(Astro.url.pathname, 'en');
 						items.map((item) => (
 							<a
 								href={item.href}
+								target={item.external ? '_blank' : undefined}
+								rel={item.external ? 'noopener noreferrer' : undefined}
 								class="block rounded-xl px-3.5 py-2.5 text-sm font-medium text-muted hover:bg-surface-muted hover:text-foreground"
 							>
 								{item.label}

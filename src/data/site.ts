@@ -14,6 +14,7 @@ export const site = {
 	location: '上海，中国',
 	social: {
 		github: 'https://github.com/Dewyue',
+		folio: 'https://dewyue.github.io/folio/',
 		instagram: 'https://www.instagram.com/dewy_justdoit/',
 		xiaohongshu: 'https://xhslink.cn/m/5GTFXIU0yUN',
 		douyin: 'https://v.douyin.com/2y9Lx_T78Hc/',

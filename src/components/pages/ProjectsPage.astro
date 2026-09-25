@@ -10,7 +10,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = getUi(locale);
-const { projects: portfolioProjects } = await loadLocalizedContent(locale);
+const { site, projects: portfolioProjects } = await loadLocalizedContent(locale);
 const homeBase = localizePath(locale, '/');
 ---
 
@@ -22,6 +22,20 @@ const homeBase = localizePath(locale, '/');
 			<p class="reveal mt-4 max-w-2xl text-base leading-relaxed text-muted">
 				{t.projects.intro}
 			</p>
+
+			<a
+				href={site.social.folio}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="tile tile-hover reveal mt-8 flex items-end justify-between gap-4 p-6 sm:p-7"
+			>
+				<div>
+					<p class="section-index mb-2">Folio</p>
+					<h2 class="display-title text-2xl sm:text-3xl">{t.projects.folioTitle}</h2>
+					<p class="mt-2 max-w-md text-sm leading-relaxed text-muted">{t.projects.folioBody}</p>
+				</div>
+				<span class="link-blue shrink-0 text-sm font-semibold">{t.projects.folioCta}</span>
+			</a>
 
 			<div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 				{

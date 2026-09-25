@@ -19,6 +19,7 @@ export function toSiteFromStore(store: CmsStore) {
 		location: p.location,
 		social: {
 			github: p.github,
+			folio: staticSite.social.folio,
 			instagram: p.instagram,
 			xiaohongshu: p.xiaohongshu,
 			douyin: p.douyin,
