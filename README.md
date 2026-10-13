@@ -4,7 +4,7 @@
 
 Forward Deployed Engineer 的个人主页。用设计与工程把业务问题做成可上线的产品：设计系统、家长端 H5 / 小程序、员工端 Soft Ops，以及 AI Native 交付。
 
-线上地址：[wangyue-dewy.vercel.app](https://wangyue-dewy.vercel.app)
+线上地址：[dewyue.com](https://dewyue.com)
 
 站点是中英双语。中文在根路径（`/`），英文在 `/en`。导航里的「中 / EN」会切到同一页的另一种语言，并尽量留在原来的滚动位置。
 
