@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CodeProjectsGrid from '../labs/CodeProjectsGrid.astro';
 import PortfolioViewer from '../portfolio/PortfolioViewer.astro';
 import { getUi, localizePath, type Locale } from '../../i18n';
 import { loadLocalizedContent } from '../../i18n/loadContent';
@@ -10,7 +11,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = getUi(locale);
-const { site, projects: portfolioProjects } = await loadLocalizedContent(locale);
+const { projects: portfolioProjects } = await loadLocalizedContent(locale);
 const homeBase = localizePath(locale, '/');
 ---
 
@@ -25,18 +26,9 @@ const homeBase = localizePath(locale, '/');
 
 			<div class="mt-10">
 				<p class="section-index reveal mb-3">{t.home.labsLabel}</p>
-				<a
-					href={site.social.folio}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="tile tile-hover reveal flex items-end justify-between gap-4 p-6 sm:p-7"
-				>
-					<div>
-						<h2 class="display-title text-2xl sm:text-3xl">{t.projects.labsTitle}</h2>
-						<p class="mt-2 max-w-md text-sm leading-relaxed text-muted">{t.projects.labsBody}</p>
-					</div>
-					<span class="link-blue shrink-0 text-sm font-semibold">{t.projects.labsCta}</span>
-				</a>
+				<h2 class="display-title reveal mb-2 text-2xl sm:text-3xl">{t.projects.labsTitle}</h2>
+				<p class="reveal mb-5 max-w-md text-sm leading-relaxed text-muted">{t.projects.labsBody}</p>
+				<CodeProjectsGrid locale={locale} />
 			</div>
 
 			<div class="mt-12">

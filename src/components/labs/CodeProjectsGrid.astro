@@ -1,0 +1,47 @@
+---
+import { getCodeProjects } from '../../data/codeProjects';
+import type { Locale } from '../../i18n';
+
+interface Props {
+	locale: Locale;
+	/** denser cards for home teaser column */
+	compact?: boolean;
+}
+
+const { locale, compact = false } = Astro.props;
+const projects = getCodeProjects(locale);
+---
+
+<div class:list={['grid gap-3', compact ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-4']}>
+	{
+		projects.map((project) => (
+			<a
+				href={project.github}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="tile tile-hover reveal group flex flex-col p-5 sm:p-6"
+			>
+				<p class="text-[11px] font-semibold tracking-wider text-accent">{project.stack}</p>
+				<h3
+					class:list={[
+						'mt-2 font-semibold tracking-tight text-[var(--color-foreground)]',
+						compact ? 'text-base' : 'text-lg',
+					]}
+				>
+					{project.title}
+				</h3>
+				<p
+					class:list={[
+						'mt-2 flex-1 leading-relaxed text-muted',
+						compact ? 'text-xs' : 'text-sm',
+					]}
+				>
+					{project.description}
+				</p>
+				<span class="link-blue mt-4 text-sm font-semibold">
+					GitHub →
+				</span>
+			</a>
+		))
+	}
+</div>
