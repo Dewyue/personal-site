@@ -46,6 +46,15 @@ const timelineGroups = [
 		),
 	},
 	{
+		title: t.about.catCampus,
+		items: timeline.filter(
+			(item) =>
+				item.category === t.about.catCampus ||
+				item.category === '校园经历' ||
+				item.category === 'Campus',
+		),
+	},
+	{
 		title: t.about.catWorkshop,
 		items: timeline.filter(
 			(item) =>

@@ -6,11 +6,11 @@ export const enSite = {
 	name: 'Dewy',
 	englishName: 'Dewy',
 	sloganLines: ['Just do it', 'Just Dewy'] as const,
-	title: 'FDE · AI-native design engineering',
+	title: 'AI product · Embedded FDE',
 	tagline:
-		'I use design and engineering together to turn business problems into products that actually ship — whether the experience holds up, and whether it can be delivered.',
+		'Design-trained, shipping AI products on-site in education toB — turning fuzzy needs into acceptably scoped, production systems with agents in real workflows.',
 	description:
-		"Dewy (Wang Yue)'s personal site — Forward Deployed Engineer. Design systems and AI-native delivery: from insight to Web, mini programs, and ops dashboards.",
+		"Dewy (Wang Yue)'s personal site — AI product / embedded FDE. Customer research, priority stacking, and delivery to production; clear about where models and agents belong in business work.",
 	url: zhSite.url,
 	locale: 'en' as const,
 	avatar: zhSite.avatar,
@@ -22,10 +22,10 @@ export const enSite = {
 
 export const enAboutStory = {
 	intro:
-		"Hi, I'm Dewy (Wang Yue) — a Forward Deployed Engineer. I use design and engineering together to turn business problems into products that actually ship.",
+		"Hi, I'm Dewy (Wang Yue) — a design-trained AI product / embedded FDE. I care how AI enters real work, and I start from high-value business outcomes to turn fuzzy needs into shippable scope.",
 	paragraphs: [
-		"I'm currently an FDE at a tech consulting firm, while doing interaction design and front-end for an education-tech business: multi-brand design systems, parent H5 / mini-program conversion UX, and Soft Ops dashboards — with Cursor Agent Skills that keep delivery reusable.",
-		'Earlier work spans AI products and design practice: dialect corpus and strategy at Xiaohongshu, Prompt Engineering for Jimeng video models at ByteDance, scenario research for a GAC future concept vehicle, and the commissioned memoir Shuzhai yu Renjian end to end.',
+		'Recently I’ve been on-site in education toB: customer research, clarifying requirements and priorities; clear about model/agent boundaries; human–AI collaboration; coordinating across teams and iterating with field feedback.',
+		'Earlier: Prompt Engineering for Jimeng Seedance 2.0 at ByteDance; Shanghainese dialect LLM corpus and strategy at Xiaohongshu; GAC future-mobility concept research; and the commissioned memoir Shuzhai yu Renjian end to end.',
 		"Outside work I dive, climb, dance popping and waacking, play guitar, and love film, coffee, board games, and improv comedy. Playing seriously trains the same sense of rhythm, detail, and presence. If you'd like to collaborate, I'd love to hear from you.",
 	],
 };
@@ -41,29 +41,29 @@ export const enSkillCategories = [
 		title: 'FDE delivery',
 		items: [
 			'On-site requirement breakdown',
-			'Design → code → ship',
-			'Soft Ops dashboards',
-			'H5 / WeChat mini programs',
-			'CloudBase / CDN release',
+			'PoC / MVP validation',
+			'Spec → test → ship',
+			'FastAPI integration & ops',
+			'Human-in-the-loop fallbacks',
 		],
 	},
 	{
 		title: 'Design systems & brand',
 		items: [
-			'Multi-brand visual systems',
-			'Figma tokens / components',
-			'IP & marketing assets',
-			'Conversion-flow visuals',
+			'Multi-brand UI consistency',
+			'Soft Bento workbench',
+			'Figma components + Cursor Skills',
+			'Parent conversion flows',
 			'Aesthetic eval & iteration',
 		],
 	},
 	{
 		title: 'AI-native workflow',
 		items: [
-			'Cursor Agent Skills',
-			'Spec / acceptance criteria',
-			'Reusable PE & SOPs',
-			'Daily stakeholder worklogs',
+			'Ops advisory agents',
+			'Cursor / Copilot development',
+			'Spec / TDD / SOP / Eval',
+			'CI/CD full-stack loop',
 			'Prompt Engineering',
 		],
 	},
@@ -72,35 +72,27 @@ export const enSkillCategories = [
 export const enTimeline = [
 	{
 		category: 'Work',
-		year: '2026.6 — Present',
+		year: '2026.5 — Present',
 		title: 'Forward Deployed Engineer',
-		company: 'Tech consulting company (confidential)',
+		company: 'Tech company (confidential)',
 		description:
-			'Embedded FDE for client delivery: turn ambiguous requests into shippable scope and production releases. Local-preview-before-production discipline; Cursor Agent Skills that encode design language, acceptance checks, and repeatable delivery steps into an AI-native workflow.',
+			'Embedded with clients: align the real work problem and a clear “won’t do” list, then write acceptably scoped plans. Copilot / Cursor for PoC and MVP; Spec, TDD, SOP, Eval, and CI/CD as a delivery loop; FastAPI integration, env setup, and data ops. Local-preview-before-production discipline, with retry / degrade / fallback and human review — shipping products clients keep using.',
 	},
 	{
 		category: 'Work',
-		year: '2026.6 — Present',
-		title: 'Interaction Design · Front-end',
-		company: 'Education-tech company (confidential)',
+		year: '2026.6 — 2026.8',
+		title: 'Enterprise AI · B-side product',
+		company: 'Education-tech company (on-site, confidential)',
 		description:
-			'Own multi-brand design systems and UI consistency (marketing / IP / contract surfaces); design parent H5 / mini-program conversion flows and critical-path UX; structure Soft Ops dashboard IA and emphasis — and ship the related front-end interfaces into real use.',
+			'On-site AI product planning and delivery in education toB: an ops advisory agent (natural-language questions → permissioned live data → situation judgment → human-confirmed tasks); HR and finance flows into auditable pipelines; parent H5 / mini-program conversion IA; multi-brand systems and Soft Bento workbench consistency, with design language encoded in Figma + Cursor Skills.',
 	},
 	{
 		category: 'Education',
 		year: 'Class of 2027',
-		title: 'Undergraduate',
+		title: 'B.A. · Product Design',
 		company: 'Central South University',
 		description:
-			'Product Design major, 2023 intake. Core courses: Design Psychology, Intelligent Interaction Design, Design Process & Methods, User Research, Product Form Design, Service Design, and more.',
-	},
-	{
-		category: 'Internships',
-		year: '2025.8',
-		title: 'AI Corpus Training Intern',
-		company: 'Xiaohongshu',
-		description:
-			'Worked on Xiaohongshu’s dialect AI project, labeling and refining Shanghainese corpus and strategy. Mapped real-world expression habits and deeper preferences to ground model training in authentic communication.',
+			'985 · School of Architecture and Art · 2023.9 — 2027.6. Core courses: Design Psychology, Intelligent Interaction Design, Design Process & Methods, User Research, Product Form Design, Service Design. Self-study: MySQL, Python, JavaScript, Arduino IDE.',
 	},
 	{
 		category: 'Internships',
@@ -108,7 +100,15 @@ export const enTimeline = [
 		title: 'PE Engineer',
 		company: 'ByteDance',
 		description:
-			'Contributed to training and iteration of Jimeng’s Seedance 4.0 video model. Built Prompt Engineering strategies from product aesthetics and UX, tuning camera, light, material, and narrative across multimodal dimensions.',
+			'Contributed to training and iteration of Jimeng’s Seedance 2.0 video model. Built Prompt Engineering strategies from product aesthetics and UX, mapping natural language to controlled tags and tuning camera, light, material, audio, and narrative across multimodal dimensions.',
+	},
+	{
+		category: 'Internships',
+		year: '2025.8',
+		title: 'LLM corpus training intern',
+		company: 'Xiaohongshu',
+		description:
+			'Shanghainese dialect LLM labeling and strategy; owned the annotation system and badcases, triaging disputed intern samples for algorithms. Extracted expression habits and preferences from real use to improve evaluation quality and conversational feel.',
 	},
 	{
 		category: 'Projects',
@@ -116,7 +116,7 @@ export const enTimeline = [
 		title: 'Mobility concept design',
 		company: 'GAC · From Future to Future',
 		description:
-			'Led scenario and user research for a GAC future concept vehicle, turning social trends into design language and feature definition, and delivering the full concept narrative. Advanced to the national top seven with mentor recognition from GAC and OPSH.',
+			'Led scenario and user research for a GAC future concept vehicle in the Greater Bay Area context, turning social trends into design language and feature definition. Advanced to the national top seven with mentor recognition from GAC and OPSH.',
 	},
 	{
 		category: 'Projects',
@@ -125,6 +125,14 @@ export const enTimeline = [
 		company: 'Book · Shuzhai yu Renjian',
 		description:
 			'Commissioned by an elder-care company to design a personal memoir. Owned interviews, structure, layout system, and cover craft end to end — aging-friendly visuals and restrained materiality for a dignified narrative object.',
+	},
+	{
+		category: 'Campus',
+		year: '2023.9 — 2024.6',
+		title: 'Liaison center lead',
+		company: 'CSU Youth League · Clubs department',
+		description:
+			'Campus liaison and event delivery: major club fairs; materials and cross-university socials in Changsha — process, budget, and venue — so collaboration stayed concrete and executable.',
 	},
 	{
 		category: 'Workshops / Academic',
@@ -148,7 +156,7 @@ export const enTimeline = [
 		title: 'TRAE AI Coding Hackathon',
 		company: 'Central South University',
 		description:
-			'First solo campus vibe-coding hackathon — shipping an interactive prototype under time pressure with AI-assisted natural-language programming.',
+			'Campus AI coding hackathon — shipping an interactive prototype under time pressure with AI-assisted natural-language programming.',
 	},
 ] as const;
 
@@ -308,12 +316,12 @@ export const enProjects = zhProjects.map((p) => {
 });
 
 export const enSkills = [
-	{ name: 'Figma design systems', level: 92 },
-	{ name: 'Cursor / AI Coding', level: 90 },
-	{ name: 'Soft Ops / dashboard UX', level: 88 },
+	{ name: 'Cursor / Copilot', level: 92 },
+	{ name: 'Figma design systems', level: 90 },
+	{ name: 'Spec / TDD / SOP', level: 88 },
+	{ name: 'Ops advisory agents', level: 88 },
 	{ name: 'H5 / Mini programs', level: 85 },
-	{ name: 'Brand & IP', level: 88 },
-	{ name: 'CloudBase deploy', level: 80 },
+	{ name: 'FastAPI / integration', level: 82 },
 	{ name: 'Prompt Engineering', level: 90 },
 	{ name: 'Aesthetic eval', level: 85 },
 ] as const;

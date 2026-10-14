@@ -64,6 +64,7 @@ export const ui = {
 			catEducation: '教育经历',
 			catInternship: '实习经历',
 			catProject: '项目经历',
+			catCampus: '校园经历',
 			catWorkshop: '工作坊 / 学术',
 		},
 		contact: {
@@ -210,6 +211,7 @@ export const ui = {
 			catEducation: 'Education',
 			catInternship: 'Internships',
 			catProject: 'Projects',
+			catCampus: 'Campus',
 			catWorkshop: 'Workshops / Academic',
 		},
 		contact: {
