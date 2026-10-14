@@ -11,7 +11,7 @@ export const site = {
 	locale: 'zh-CN',
 	avatar: '/avatar.webp?v=14',
 	email: 'iKevinAyuso@163.com',
-	phone: '13787007885',
+	phone: '',
 	location: '上海，中国',
 	social: {
 		github: 'https://github.com/Dewyue',

@@ -15,7 +15,7 @@ export function toSiteFromStore(store: CmsStore) {
 		locale: staticSite.locale,
 		avatar: p.avatar,
 		email: p.email,
-		phone: p.phone,
+		phone: '',
 		location: p.location,
 		social: {
 			github: p.github,

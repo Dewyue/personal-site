@@ -22,7 +22,14 @@ const paragraphs = profile.aboutParagraphs.join('\n\n');
 					>站点描述<textarea name="description" rows="2" class="field">{profile.description}</textarea></label
 				>
 				<label class="text-sm">邮箱<input name="email" value={profile.email} class="field" /></label>
-				<label class="text-sm">电话<input name="phone" value={profile.phone} class="field" /></label>
+				<label class="text-sm"
+					>电话（仅后台自用，不会出现在公开页面）<input
+						name="phone"
+						value={profile.phone}
+						class="field"
+						autocomplete="off"
+					/></label
+				>
 				<label class="text-sm">地点<input name="location" value={profile.location} class="field" /></label>
 				<label class="text-sm">头像路径<input name="avatar" value={profile.avatar} class="field" /></label>
 			</div>

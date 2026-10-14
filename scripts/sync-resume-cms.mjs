@@ -18,7 +18,7 @@ const profile = {
 	description:
 		'王悦的个人网站 — AI 产品 / 驻场 FDE。客户调研、需求澄清与优先级排序，把方案做到可验收、可上线；熟悉大模型与 Agent 在业务里的边界，习惯人机协同。',
 	email: 'iKevinAyuso@163.com',
-	phone: '13787007885',
+	phone: '',
 	location: '上海，中国',
 	avatar: '/avatar.webp?v=14',
 	wechat: 'Dewyue',

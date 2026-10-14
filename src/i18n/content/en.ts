@@ -15,7 +15,7 @@ export const enSite = {
 	locale: 'en' as const,
 	avatar: zhSite.avatar,
 	email: zhSite.email,
-	phone: zhSite.phone,
+	phone: '',
 	location: 'Shanghai, China',
 	social: { ...zhSite.social },
 };
