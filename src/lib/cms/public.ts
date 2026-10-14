@@ -14,6 +14,7 @@ export function toSiteFromStore(store: CmsStore) {
 		url: staticSite.url,
 		locale: staticSite.locale,
 		avatar: p.avatar,
+		resume: staticSite.resume,
 		email: p.email,
 		phone: p.phone,
 		location: p.location,

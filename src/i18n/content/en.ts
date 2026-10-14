@@ -14,6 +14,7 @@ export const enSite = {
 	url: zhSite.url,
 	locale: 'en' as const,
 	avatar: zhSite.avatar,
+	resume: zhSite.resume,
 	email: zhSite.email,
 	phone: zhSite.phone,
 	location: 'Shanghai, China',

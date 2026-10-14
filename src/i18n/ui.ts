@@ -28,6 +28,7 @@ export const ui = {
 		home: {
 			hello: '你好，',
 			iam: '我是',
+			viewResume: '查看简历',
 			browsePortfolio: '浏览作品集',
 			learnMore: '进一步了解 →',
 			selectedWorks: '精选作品。',
@@ -161,6 +162,7 @@ export const ui = {
 		home: {
 			hello: 'Hi,',
 			iam: "I'm",
+			viewResume: 'View resume',
 			browsePortfolio: 'View portfolio',
 			learnMore: 'Learn more →',
 			selectedWorks: 'Selected work.',
