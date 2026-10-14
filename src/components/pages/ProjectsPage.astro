@@ -33,7 +33,8 @@ const homeBase = localizePath(locale, '/');
 
 			<div class="mt-12">
 				<p class="section-index reveal mb-3">{t.home.deckLabel}</p>
-				<h2 class="display-title reveal mb-5 text-2xl sm:text-3xl">{t.projects.deckTitle}</h2>
+				<h2 class="display-title reveal text-2xl sm:text-3xl">{t.projects.deckTitle}</h2>
+				<p class="reveal mt-2 mb-5 text-sm text-muted">{t.projects.deckNote}</p>
 			<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 				{
 					portfolioProjects.map((project) => (
