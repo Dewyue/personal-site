@@ -3,12 +3,21 @@ import type { Locale } from '../i18n';
 export type CodeProject = {
 	id: string;
 	github: string;
+	/** Fallback when GitHub is unreachable */
 	stack: string;
 	zh: { title: string; description: string };
 	en: { title: string; description: string };
 };
 
-/** Coding projects shown in 项目集 — link to GitHub for now. */
+export type LocalizedCodeProject = {
+	id: string;
+	github: string;
+	stack: string;
+	title: string;
+	description: string;
+};
+
+/** Coding projects in 项目集 — titles stay local; description/stack sync from GitHub About. */
 export const codeProjects: CodeProject[] = [
 	{
 		id: 'qiuzhao-schedule',
@@ -64,17 +73,83 @@ export const codeProjects: CodeProject[] = [
 	},
 ];
 
-export function localizeCodeProject(project: CodeProject, locale: Locale) {
-	const copy = locale === 'en' ? project.en : project.zh;
-	return {
-		id: project.id,
-		github: project.github,
-		stack: project.stack,
-		title: copy.title,
-		description: copy.description,
-	};
+type GithubMeta = {
+	description: string | null;
+	language: string | null;
+};
+
+const CACHE_TTL_MS = 15 * 60 * 1000;
+const metaCache = new Map<string, { at: number; meta: GithubMeta | null }>();
+
+function ownerRepo(github: string): { owner: string; repo: string } | null {
+	try {
+		const u = new URL(github);
+		const [, owner, repo] = u.pathname.split('/');
+		if (!owner || !repo) return null;
+		return { owner, repo: repo.replace(/\.git$/, '') };
+	} catch {
+		return null;
+	}
 }
 
-export function getCodeProjects(locale: Locale) {
-	return codeProjects.map((p) => localizeCodeProject(p, locale));
+async function fetchGithubMeta(github: string): Promise<GithubMeta | null> {
+	const cached = metaCache.get(github);
+	if (cached && Date.now() - cached.at < CACHE_TTL_MS) {
+		return cached.meta;
+	}
+
+	const parts = ownerRepo(github);
+	if (!parts) {
+		metaCache.set(github, { at: Date.now(), meta: null });
+		return null;
+	}
+
+	const headers: Record<string, string> = {
+		Accept: 'application/vnd.github+json',
+		'User-Agent': 'dewyue-personal-site',
+		'X-GitHub-Api-Version': '2022-11-28',
+	};
+	const token =
+		import.meta.env.GITHUB_TOKEN ||
+		process.env.GITHUB_TOKEN ||
+		import.meta.env.GH_TOKEN ||
+		process.env.GH_TOKEN;
+	if (token) headers.Authorization = `Bearer ${token}`;
+
+	try {
+		const res = await fetch(`https://api.github.com/repos/${parts.owner}/${parts.repo}`, {
+			headers,
+		});
+		if (!res.ok) {
+			metaCache.set(github, { at: Date.now(), meta: cached?.meta ?? null });
+			return cached?.meta ?? null;
+		}
+		const data = (await res.json()) as { description?: string | null; language?: string | null };
+		const meta: GithubMeta = {
+			description: data.description?.trim() || null,
+			language: data.language?.trim() || null,
+		};
+		metaCache.set(github, { at: Date.now(), meta });
+		return meta;
+	} catch {
+		metaCache.set(github, { at: Date.now(), meta: cached?.meta ?? null });
+		return cached?.meta ?? null;
+	}
+}
+
+export async function getCodeProjects(locale: Locale): Promise<LocalizedCodeProject[]> {
+	const metas = await Promise.all(codeProjects.map((p) => fetchGithubMeta(p.github)));
+
+	return codeProjects.map((project, i) => {
+		const copy = locale === 'en' ? project.en : project.zh;
+		const meta = metas[i];
+		return {
+			id: project.id,
+			github: project.github,
+			stack: meta?.language || project.stack,
+			title: copy.title,
+			// GitHub About is the live source; local copy is offline fallback.
+			description: meta?.description || copy.description,
+		};
+	});
 }
