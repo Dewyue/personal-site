@@ -20,32 +20,6 @@ export type LocalizedCodeProject = {
 /** Coding projects in 项目集 — titles stay local; description/stack sync from GitHub About. */
 export const codeProjects: CodeProject[] = [
 	{
-		id: 'qiuzhao-schedule',
-		github: 'https://github.com/Dewyue/qiuzhao-schedule',
-		stack: 'TypeScript',
-		zh: {
-			title: '秋招日程',
-			description: '占用和空闲同等可见，一眼看出哪段能排、哪场撞车。本机存储，可导出 JSON。',
-		},
-		en: {
-			title: 'Autumn Recruit Schedule',
-			description: 'Occupied and free time side by side — see what you can book and what clashes. Local-first, exportable JSON.',
-		},
-	},
-	{
-		id: 'diary',
-		github: 'https://github.com/Dewyue/diary',
-		stack: 'TypeScript',
-		zh: {
-			title: '本地日记',
-			description: '页内直写直改、滑动切日、月历与标签查找；数据仅存本机。',
-		},
-		en: {
-			title: 'Local Diary',
-			description: 'Write in place, swipe days, find by calendar or tags. Data stays on your device.',
-		},
-	},
-	{
 		id: 'campusreuse',
 		github: 'https://github.com/Dewyue/campusreuse',
 		stack: 'JavaScript',
@@ -59,6 +33,19 @@ export const codeProjects: CodeProject[] = [
 		},
 	},
 	{
+		id: 'qiuzhao-schedule',
+		github: 'https://github.com/Dewyue/qiuzhao-schedule',
+		stack: 'TypeScript',
+		zh: {
+			title: '秋招日程',
+			description: '占用和空闲同等可见，一眼看出哪段能排、哪场撞车。本机存储，可导出 JSON。',
+		},
+		en: {
+			title: 'Autumn Recruit Schedule',
+			description: 'Occupied and free time side by side — see what you can book and what clashes. Local-first, exportable JSON.',
+		},
+	},
+	{
 		id: 'brief-agent',
 		github: 'https://github.com/Dewyue/brief-agent',
 		stack: 'HTML',
@@ -69,6 +56,19 @@ export const codeProjects: CodeProject[] = [
 		en: {
 			title: 'Brief Agent',
 			description: 'A one-page brief agent that turns fuzzy ideas into a shippable brief.',
+		},
+	},
+	{
+		id: 'diary',
+		github: 'https://github.com/Dewyue/diary',
+		stack: 'TypeScript',
+		zh: {
+			title: '个人日记',
+			description: '页内直写直改、滑动切日、月历与标签查找；数据仅存本机。',
+		},
+		en: {
+			title: 'Personal Diary',
+			description: 'Write in place, swipe days, find by calendar or tags. Data stays on your device.',
 		},
 	},
 ];
