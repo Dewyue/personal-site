@@ -2,10 +2,15 @@
 export const prerender = false;
 
 import AdminLayout from '../../layouts/AdminLayout.astro';
+import { countUnreadMessages, listMessages } from '../../lib/cms/messages';
 import { readStore } from '../../lib/cms/store';
 
 const store = await readStore();
+const unreadMessages = await countUnreadMessages();
+const totalMessages = (await listMessages()).length;
 const stats = [
+	{ label: '未读留言', value: unreadMessages, href: '/admin/messages' },
+	{ label: '全部留言', value: totalMessages, href: '/admin/messages' },
 	{ label: '电影', value: store.movies.length, href: '/admin/movies' },
 	{ label: '作品', value: store.projects.length, href: '/admin/projects' },
 	{ label: '技能', value: store.skills.length, href: '/admin/skills' },
@@ -14,7 +19,7 @@ const stats = [
 ---
 
 <AdminLayout title="概览" description="站点内容一览，从左侧进入各模块管理。">
-	<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+	<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		{
 			stats.map((item) => (
 				<a

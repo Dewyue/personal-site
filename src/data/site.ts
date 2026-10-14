@@ -9,7 +9,6 @@ export const site = {
 	url: 'https://wangyue-dewy.vercel.app',
 	locale: 'zh-CN',
 	avatar: '/avatar.webp?v=14',
-	resume: '/resume/wangyue.pdf',
 	email: 'iKevinAyuso@163.com',
 	phone: '13787007885',
 	location: '上海，中国',

@@ -49,23 +49,17 @@ const educationLine = education
 						{t.home.hello}<br />{t.home.iam}{locale === 'en' ? ' ' : ''}{site.name}{locale === 'zh' ? '。' : '.'}
 					</h1>
 					{
-						(educationLine || site.resume) && (
+						educationLine && (
 							<p class="reveal mt-5 flex flex-wrap items-center gap-2">
-								{educationLine && (
-									<span class="inline-flex items-center rounded-full bg-accent-soft px-4 py-1.5 text-sm font-semibold text-accent sm:text-[15px]">
-										{educationLine}
-									</span>
-								)}
-								{site.resume && (
-									<a
-										href={site.resume}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="inline-flex items-center rounded-full border border-accent/35 bg-white px-4 py-1.5 text-sm font-semibold text-accent transition-colors hover:bg-accent-soft sm:text-[15px] dark:bg-transparent dark:hover:bg-accent-soft/20"
-									>
-										{t.home.viewResume}
-									</a>
-								)}
+								<span class="inline-flex items-center rounded-full bg-accent-soft px-4 py-1.5 text-sm font-semibold text-accent sm:text-[15px]">
+									{educationLine}
+								</span>
+								<a
+									href={`${contactHref}?intent=resume#message`}
+									class="inline-flex items-center rounded-full border border-accent/35 bg-white px-4 py-1.5 text-sm font-semibold text-accent transition-colors hover:bg-accent-soft sm:text-[15px] dark:bg-transparent dark:hover:bg-accent-soft/20"
+								>
+									{t.home.viewResume}
+								</a>
 							</p>
 						)
 					}
